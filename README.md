@@ -188,4 +188,36 @@ Before you start, ensure you have gone through the [Setup](#setup) section.
     - `private_key.asc` and `private_key_base64.asc` (for validators)
 
 
+# Deploy DLP Smart Contracts
 
+1. Clone the DLP Smart Contract repo:
+   ```bash
+   cd ..
+   git clone https://github.com/vana-com/vana-dlp-smart-contracts.git
+   cd vana-dlp-smart-contracts
+   ```
+
+2. Install dependencies:
+   ```bash
+   yarn install
+   ```
+
+3. Export your private key from Metamask (see [official instructions](https://support.metamask.io/managing-my-wallet/secret-recovery-phrase-and-private-keys/how-to-export-an-accounts-private-key)).
+
+4. Edit the `.env` file in the `vana-dlp-smart-contracts` directory:
+   ```
+   DEPLOYER_PRIVATE_KEY=0x... (your coldkey private key)
+   OWNER_ADDRESS=0x... (your coldkey address)
+   SATORI_RPC_URL=https://rpc.satori.vana.org
+   DLP_NAME=CryptoBuro
+   DLP_TOKEN_NAME=Buro
+   DLP_TOKEN_SYMBOL=CB
+   ```
+
+5. Deploy contracts:
+   ```bash
+   npx hardhat deploy --network satori --tags DLPDeploy
+   ```
+   Note the deployed addresses for DataLiquidityPool and DataLiquidityPoolToken.
+
+6. Congratulations, you've deployed the DLP smart contracts! You can confirm they're up by searching the address for each on the block explorer: https://satori.vanascan.io/address/<DataLiquidityPool\>.
