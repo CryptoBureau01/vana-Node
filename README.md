@@ -16,11 +16,85 @@ Vana raised $25M from Tier1 investors. You can run a validator on your own hardw
 
 
 
-# Follow our TG : https://t.me/CryptoBuroOfficial
+## Follow our TG : https://t.me/CryptoBuroOfficial
+
+
+# Setup dependencies
+
+## 1. Install Git
+```
+sudo apt update
+sudo apt install git -y
+```
+
+### Git Version Check
+```
+git --version
+```
+
+## 2. Install Python 3.11+
+
+**Ubuntu might not have the latest Python version by default, so first, add the deadsnakes PPA (which contains newer Python versions):**
+
+```
+sudo apt update
+sudo apt install software-properties-common -y
+sudo add-apt-repository ppa:deadsnakes/ppa
+```
+
+### Now, install Python 3.11:
+```
+sudo apt update
+sudo apt install python3.11 python3.11-venv python3.11-dev -y
+```
+
+### Set Python 3.11 as the default version
+```
+sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 1
+```
+
+### Check Python3 Version 
+```
+python3 --version
+```
+
+## 3. Install Poetry
+```
+curl -sSL https://install.python-poetry.org | python3 -
+```
+
+### Set Poetry Path
+```
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+### Check Poetry Version
+```
+poetry --version
+```
+
+## 4. Install Node.js and npm
+
+**First, add the NodeSource repository for Node.js 18.x (the latest LTS version):**
+```
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+```
+
+### Install Node.js
+```
+sudo apt install -y nodejs
+```
+
+### Check Npm && Node Version 
+```
+node -v
+npm -v
+```
 
 
 
-### Setup Steps
+# Node Setup Steps
 
 1. Clone the repository:
    ```bash
