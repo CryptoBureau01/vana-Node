@@ -129,5 +129,63 @@ npm -v
 
    Follow the prompts to set a secure password. Save the mnemonic phrases securely; you'll need these to recover your wallet if needed.
 
+6. Add Satori Testnet to Metamask:
+   - Network name: Satori Testnet
+   - RPC URL: https://rpc.satori.vana.org
+   - Chain ID: 14801
+   - Currency: VANA
 
-   
+7. Export your private keys. Follow the prompts and securely save the displayed private keys:
+   ```bash
+   vanacli wallet export_private_key
+   Enter wallet name (default):
+   Enter key type [coldkey/hotkey] (coldkey): coldkey
+   Enter your coldkey password:
+   Your coldkey private key:
+   ```
+   ```bash
+   vanacli wallet export_private_key
+   Enter wallet name (default):
+   Enter key type [coldkey/hotkey] (coldkey): hotkey
+   Your hotkey private key:
+   ```
+
+8. Import your coldkey and hotkey addresses to Metamask:
+   - Click your account icon in MetaMask and select "Import Account"
+   - Select "Private Key" as the import method
+   - Paste the private key for your coldkey
+   - Repeat the process for your hotkey
+
+9. Fund both addresses with testnet VANA:
+   - Visit https://faucet.vana.org
+   - Connect your Metamask wallet
+   - Request VANA for both your coldkey and hotkey addresses
+
+   Note: you can only use the faucet once per day. Use the testnet faucet available at https://faucet.vana.org to fund your wallets, or ask a VANA holder to send you some test VANA tokens.
+
+Always keep your private keys and mnemonic phrases secure. Never share them with anyone.
+
+
+
+# Creating a DLP
+
+If you're joining an existing DLP as a validator, skip to the [Validator Setup](#validator-setup) section.
+
+Before you start, ensure you have gone through the [Setup](#setup) section.
+
+### Generate Encryption Keys
+
+1. Run the key generation script:
+   ```bash
+   ./keygen.sh
+   ```
+   This script generates RSA key pairs for file encryption/decryption in the DLP.
+
+2. Follow the prompts to enter your name, email, and key expiration.
+
+3. The script generates four files:
+    - `public_key.asc` and `public_key_base64.asc` (for UI)
+    - `private_key.asc` and `private_key_base64.asc` (for validators)
+
+
+
