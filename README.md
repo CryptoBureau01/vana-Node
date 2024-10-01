@@ -115,7 +115,6 @@ npm -v
 
 4. Install Vana CLI:
    ```bash
-   # To install vanacli system-wide, run the following command:
    pip install vana
    ```
 
