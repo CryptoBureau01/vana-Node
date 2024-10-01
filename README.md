@@ -190,21 +190,21 @@ Before you start, ensure you have gone through the [Setup](#setup) section.
 
 # Deploy DLP Smart Contracts
 
-1. Clone the DLP Smart Contract repo:
+ 1. Clone the DLP Smart Contract repo:
    ```bash
    cd ..
    git clone https://github.com/vana-com/vana-dlp-smart-contracts.git
    cd vana-dlp-smart-contracts
    ```
 
-2. Install dependencies:
+ 2. Install dependencies:
    ```bash
    yarn install
    ```
 
-3. Export your private key from Metamask (see [official instructions](https://support.metamask.io/managing-my-wallet/secret-recovery-phrase-and-private-keys/how-to-export-an-accounts-private-key)).
+ 3. Export your private key from Metamask (see [official instructions](https://support.metamask.io/managing-my-wallet/secret-recovery-phrase-and-private-keys/how-to-export-an-accounts-private-key)).
 
-4. Edit the `.env` file in the `vana-dlp-smart-contracts` directory:
+ 4. Edit the `.env` file in the `vana-dlp-smart-contracts` directory:
    ```
    DEPLOYER_PRIVATE_KEY=0x... (your coldkey private key)
    OWNER_ADDRESS=0x... (your coldkey address)
@@ -214,10 +214,137 @@ Before you start, ensure you have gone through the [Setup](#setup) section.
    DLP_TOKEN_SYMBOL=CB
    ```
 
-5. Deploy contracts:
+ 5. Deploy contracts:
    ```bash
    npx hardhat deploy --network satori --tags DLPDeploy
    ```
    Note the deployed addresses for DataLiquidityPool and DataLiquidityPoolToken.
 
-6. Congratulations, you've deployed the DLP smart contracts! You can confirm they're up by searching the address for each on the block explorer: https://satori.vanascan.io/address/<DataLiquidityPool\>.
+ 6. Congratulations, you've deployed the DLP smart contracts! You can confirm they're up by searching the address for each on the block explorer: 
+ https://satori.vanascan.io/address/<DataLiquidityPool\>.
+
+ 7. Configure the DLP contract:
+    - Visit https://satori.vanascan.io/address/<DataLiquidityPool address>
+    - Go to "Write proxy" tab
+    - Connect your wallet
+    - Call `updateFileRewardDelay` and set it to 0
+    - Call `addRewardsForContributors` with 1000000000000000000000000 (1 million tokens)
+
+ 8. Update the `.env` file in the `vana-dlp-chatgpt` directory:
+   ```
+   DLP_SATORI_CONTRACT=0x... (DataLiquidityPool address)
+   DLP_TOKEN_SATORI_CONTRACT=0x... (DataLiquidityPoolToken address)
+   PRIVATE_FILE_ENCRYPTION_PUBLIC_KEY_BASE64=... (content of public_key_base64.asc)
+   ```
+
+After completing these steps, proceed to the [Validator Setup](#validator-setup) section.
+
+
+# Validator Setup
+
+Follow these steps whether you're a DLP creator or joining an existing DLP.
+
+Before you start, ensure you have gone through the [Setup](#setup) section.
+
+### Required Information
+
+For non-DLP creators, request from the DLP creator:
+- DLP contract address (DataLiquidityPool)
+- DLP token contract address (DataLiquidityPoolToken)
+- Public key for the DLP validator network (`public_key.asc`)
+- Base64-encoded private key for the DLP validator network (`private_key_base64.asc`)
+
+### Setup
+
+1. Ensure you're in the `vana-dlp-chatgpt` directory:
+   ```bash
+   cd vana-dlp-chatgpt
+   ```
+
+2. If you're a non-DLP creator, edit the `.env` file with the information provided by the DLP creator:
+   ```
+   DLP_SATORI_CONTRACT=0x... (DataLiquidityPool address)
+   DLP_TOKEN_SATORI_CONTRACT=0x... (DataLiquidityPoolToken address)
+   PRIVATE_FILE_ENCRYPTION_PUBLIC_KEY_BASE64=... (base64-encoded private key--yes, PUBLIC is a misnomer)
+   ```
+
+### Fund Validator with DLP Tokens
+
+For DLP creators:
+1. Import DLP token to Metamask using `<DataLiquidityPoolToken address>`
+2. Send 10 tokens to your coldkey address
+
+For non-DLP creators:
+1. Request DLP tokens from the DLP creator
+2. Once received, ensure they are in your coldkey address
+
+
+
+### Register as a Validator
+
+Note that the following commands use the local chatgpt vanacli tool that supports custom `dlp` commands.
+
+1. Register your validator:
+   ```bash
+   ./vanacli dlp register_validator --stake_amount 10
+   ```
+
+2. For non-DLP creators, ask the DLP owner to accept your registration.
+
+   DLP creators can approve validators with:
+   ```bash
+   ./vanacli dlp approve_validator --validator_address=<your hotkey address from Metamask>
+   ```
+
+
+### Run Validator Node
+
+Start the validator node:
+
+```bash
+poetry run python -m chatgpt.nodes.validator
+```
+
+Monitor the logs for any errors. If set up correctly, you'll see the validator waiting for new files to verify.
+
+### Test Your Validator
+
+#### For the Public ChatGPT DLP
+
+If you're validating in the [Public ChatGPT DLP](gptdatadao.org), follow these steps:
+
+1. Visit the [official ChatGPT DLP UI](https://gptdatadao.org/claim).
+2. Connect your wallet (must hold some VANA).
+3. Follow the instructions on the UI to upload a file (to submit the `addFile` transaction).
+4. Wait for your validator to process the file and write scores on-chain (`verifyFile` transaction).
+5. Check the UI for a reward claiming dialog and test claiming rewards.
+
+
+#### For Custom DLPs
+
+If you're validating with your own or a custom DLP, follow these steps:
+
+1. Visit [the demo DLP UI](https://dlp-ui.vercel.vana.com/claim/upload).
+2. Connect your wallet (must hold some VANA).
+3. Use the gear icon to set the DLP contract address and public encryption key.
+4. Upload a file (to submit the `addFile` transaction).
+5. In the console logs, note the uploaded file URL and encryption key (you can also add files manually via https://satori.vanascan.io/address/<DataLiquidityPool address>?tab=write_contract).
+6. Wait for your validator to process the file and write scores on-chain (`verifyFile` transaction).
+7. Check the UI for a reward claiming dialog and test claiming rewards.
+
+
+
+## Troubleshooting
+
+If you encounter issues:
+- Ensure all prerequisites are correctly installed
+- Double-check your `.env` file contents in both repositories
+- Verify your wallet has sufficient VANA and DLP tokens in both coldkey and hotkey addresses
+- Check the validator logs for specific error messages
+
+For further assistance, please join our [Discord community](https://discord.com/invite/Wv2vtBazMR).
+
+
+Join our Telegram Discussion [Telegram community](https://t.me/BuroGroupChat).
+
+
