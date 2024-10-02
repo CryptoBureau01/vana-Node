@@ -225,26 +225,32 @@ Before you start, ensure you have gone through the [Setup](#setup) section.
 # Deploy DLP Smart Contracts
 
 ### 1. Clone the DLP Smart Contract repo:
-   ```bash
-   cd ..
+   
+   ```
+   git clone https://github.com/CryptoBuroMaster/vana-Node.git
    ```
    ```
-   git clone https://github.com/vana-com/vana-dlp-smart-contracts.git
-   ```
-   ```
-   cd vana-dlp-smart-contracts
-   ```
-   ```
-   npm install --global yarn --force
+   cd vana-Node/contract/contract
    ```
 
-    
 ### 2. Install dependencies:
-   ```bash
+   ```
+   npm install
+   ```
+   ```
    yarn install
    ```
+    
+### 3. Deploy Contract 
 
-### 3. Export your private key from Metamask (see [official instructions](https://support.metamask.io/managing-my-wallet/secret-recovery-phrase-and-private-keys/how-to-export-an-accounts-private-key)).
+```
+node deploy.js
+```
+
+
+
+Note the deployed addresses for DataLiquidityPool and DataLiquidityPoolToken.
+
 
 ### 4. Edit the `.env` file in the `vana-dlp-smart-contracts` directory:
 
@@ -262,120 +268,12 @@ Before you start, ensure you have gone through the [Setup](#setup) section.
    ```
 
 
-### Remove Demo hardhat.config.ts file 
-```
-rm -rf hardhat.config.ts
-```
-
-### Create New hardhat.config.ts File with nano
-```
-nano hardhat.config.ts
-```
-
-### Now save this code in nano hardhat.config.ts file 
-
-```
-
-import { HardhatUserConfig } from "hardhat/config";
-import "@nomicfoundation/hardhat-toolbox";
-import "@openzeppelin/hardhat-upgrades";
-import "hardhat-deploy";
-import * as dotenv from "dotenv";
-
-dotenv.config();
-
-const config: HardhatUserConfig = {
-  solidity: "0.8.24",
-};
-
-module.exports = {
-  solidity: {
-    version: "0.8.24",
-    settings: {
-      optimizer: {
-        enabled: true,
-        runs: 200,
-      },
-    },
-  },
-  networks: {
-    hardhat: {},
-    moksha: {
-      url: process.env.MOKSHA_RPC_URL || "",
-      chainId: 14800,
-      accounts: process.env.DEPLOYER_PRIVATE_KEY !== undefined ? [process.env.DEPLOYER_PRIVATE_KEY] : [],
-      gas: 3000000, // Gas limit
-      gasPrice: 20000000000, // Gas price in wei (20 Gwei)
-    },
-    satori: {
-      url: process.env.SATORI_RPC_URL || "",
-      chainId: 14801,
-      accounts: process.env.DEPLOYER_PRIVATE_KEY !== undefined ? [process.env.DEPLOYER_PRIVATE_KEY] : [],
-      gas: 3000000, // Gas limit
-      gasPrice: 20000000000, // Gas price in wei (20 Gwei)
-      // maxFeePerGas: ethers.utils.parseUnits("100", "gwei"), // Uncomment and set if needed
-      // maxPriorityFeePerGas: ethers.utils.parseUnits("2", "gwei"), // Uncomment and set if needed
-    }
-  },
-  etherscan: {
-    apiKey: {
-      moksha: "abc",
-      satori: "abc",
-    },
-    customChains: [
-      {
-        network: "moksha",
-        chainId: 14800,
-        urls: {
-          apiURL: "https://api.moksha.vanascan.io/api/",
-          browserURL: "https://moksha.vanascan.io",
-        }
-      },
-      {
-        network: "satori",
-        chainId: 14801,
-        urls: {
-          apiURL: process.env.SATORI_API_URL || "",
-          browserURL: process.env.SATORI_BROWSER_URL || "",
-        }
-      }
-    ]
-  },
-  sourcify: {
-    enabled: false,
-  },
-  paths: {
-    sources: "./contracts",
-    tests: "./test",
-    cache: "./cache",
-    artifacts: "./artifacts",
-  },
-  mocha: {
-    timeout: 40000,
-  },
-  gasReporter: {
-    enabled: true,
-    excludeContracts: ["mocks", "tests"],
-    include: ["../node_module/@openzeppelin/contracts-upgradeable"],
-  },
-};
-
-export default config;
-
-```
-
-
-### Now save nano file
-
-Ctrl + o , hit enter 
-
-and now exit Ctrl + x
 
 ### 5. Deploy contracts:
    ```bash
    npx hardhat deploy --network satori --tags DLPDeploy
    ```
-   Note the deployed addresses for DataLiquidityPool and DataLiquidityPoolToken.
+   
 
 ### 6. Congratulations, you've deployed the DLP smart contracts! You can confirm they're up by searching the address for each on the block explorer: 
  https://satori.vanascan.io/address/<DataLiquidityPool\>.
