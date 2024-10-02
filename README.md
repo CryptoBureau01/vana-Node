@@ -227,10 +227,18 @@ Before you start, ensure you have gone through the [Setup](#setup) section.
  1. Clone the DLP Smart Contract repo:
    ```bash
    cd ..
+   ```
+   ```
    git clone https://github.com/vana-com/vana-dlp-smart-contracts.git
+   ```
+   ```
    cd vana-dlp-smart-contracts
    ```
+   ```
+   npm install --global yarn
+   ```
 
+    
  2. Install dependencies:
    ```bash
    yarn install
