@@ -12,7 +12,7 @@ module.exports = {
     },
   },
   paths: {
-    sources: "./", // Adjusted to look for contracts in the current directory
+    sources: "./contracts", // Adjusted to look for contracts in the 'contracts' directory
     tests: "./test", // Assuming tests are in the 'test' directory relative to the config file
     cache: "./cache",
     artifacts: "./artifacts",
