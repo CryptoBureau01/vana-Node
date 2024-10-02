@@ -163,27 +163,34 @@ npm -v
    - Currency: VANA
 
 8. Export your private keys. Follow the prompts and securely save the displayed private keys:
+
+   ### Cold wallet Private Key
+   - Enter wallet name (default):
+   - Enter key type [coldkey/hotkey] (coldkey): coldkey
+   - Enter your coldkey password:
+   - Your coldkey private key:
+
    ```bash
    vanacli wallet export_private_key
-   Enter wallet name (default):
-   Enter key type [coldkey/hotkey] (coldkey): coldkey
-   Enter your coldkey password:
-   Your coldkey private key:
-   ```
-   ```bash
-   vanacli wallet export_private_key
-   Enter wallet name (default):
-   Enter key type [coldkey/hotkey] (coldkey): hotkey
-   Your hotkey private key:
    ```
 
-9. Import your coldkey and hotkey addresses to Metamask:
+   ### Hotkey wallet private key
+   - Enter wallet name (default):
+   - Enter key type [coldkey/hotkey] (coldkey): hotkey
+   - Your hotkey private key:
+
+   
+   ```bash
+   vanacli wallet export_private_key
+   ```
+
+10. Import your coldkey and hotkey addresses to Metamask:
    - Click your account icon in MetaMask and select "Import Account"
    - Select "Private Key" as the import method
    - Paste the private key for your coldkey
    - Repeat the process for your hotkey
 
-10. Fund both addresses with testnet VANA:
+11. Fund both addresses with testnet VANA:
    - Visit https://faucet.vana.org
    - Connect your Metamask wallet
    - Request VANA for both your coldkey and hotkey addresses
