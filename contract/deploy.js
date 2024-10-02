@@ -41,7 +41,6 @@ async function main() {
 
   // Step 2: Prompt the user for environment variables
   console.log("Please enter the following values:");
-
   const DEPLOYER_PRIVATE_KEY = await question("DEPLOYER_PRIVATE_KEY: ");
   const OWNER_ADDRESS = await question("OWNER_ADDRESS: ");
   const DLP_NAME = await question("DLP_NAME: ");
@@ -67,38 +66,38 @@ DLP_TOKEN_SYMBOL=${DLP_TOKEN_SYMBOL}
 
   // Step 5: Create a simple deploy script inline (dlp-deploy.ts)
   const deployScript = `
-  import { ethers } from "hardhat";
+import { ethers } from "hardhat";
 
-  async function main() {
-    const [deployer] = await ethers.getSigners();
-    console.log("Deploying contracts with account:", deployer.address);
-    console.log("Account balance:", (await deployer.getBalance()).toString());
+async function main() {
+  const [deployer] = await ethers.getSigners();
+  console.log("Deploying contracts with account:", deployer.address);
+  console.log("Account balance:", (await deployer.getBalance()).toString());
 
-    const DLPToken = await ethers.getContractFactory("DLP");
-    const dlpToken = await DLPToken.deploy(
-      process.env.DLP_TOKEN_NAME, 
-      process.env.DLP_TOKEN_SYMBOL, 
-      process.env.OWNER_ADDRESS
-    );
-    await dlpToken.deployed();
+  const DLPToken = await ethers.getContractFactory("DLP");
+  const dlpToken = await DLPToken.deploy(
+    process.env.DLP_TOKEN_NAME, 
+    process.env.DLP_TOKEN_SYMBOL, 
+    process.env.OWNER_ADDRESS
+  );
+  await dlpToken.deployed();
 
-    console.log("DLP Token deployed to:", dlpToken.address);
+  console.log("DLP Token deployed to:", dlpToken.address);
 
-    // Call updateFileRewardDelay (for example) and set it to 0
-    let tx = await dlpToken.updateFileRewardDelay(0);
-    await tx.wait();
-    console.log("updateFileRewardDelay set to 0");
+  // Call updateFileRewardDelay (for example) and set it to 0
+  let tx = await dlpToken.updateFileRewardDelay(0);
+  await tx.wait();
+  console.log("updateFileRewardDelay set to 0");
 
-    // Call addRewardsForContributors with 1 million tokens
-    tx = await dlpToken.addRewardsForContributors(ethers.utils.parseEther("1000000"));
-    await tx.wait();
-    console.log("addRewardsForContributors called with 1 million tokens");
-  }
+  // Call addRewardsForContributors with 1 million tokens
+  tx = await dlpToken.addRewardsForContributors(ethers.utils.parseEther("1000000"));
+  await tx.wait();
+  console.log("addRewardsForContributors called with 1 million tokens");
+}
 
-  main().catch((error) => {
-    console.error(error);
-    process.exitCode = 1;
-  });
+main().catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
+});
   `;
   fs.writeFileSync("scripts/dlp-deploy.ts", deployScript);
   console.log("Deploy script saved to scripts/dlp-deploy.ts");
