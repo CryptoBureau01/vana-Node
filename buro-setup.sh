@@ -72,6 +72,24 @@ pip install vana
 # File to save wallet data
 DATA_FILE="private.json"
 
+# Function to export private keys without user interaction
+export_private_key() {
+  local key_type=$1
+  print_info "Exporting $key_type private key..."
+  
+  # Export the private key using vanacli
+  local key
+  key=$(vanacli wallet export_private_key --wallet.name default --keytype "$key_type" 2>&1)
+  local exit_code=$?
+
+  if [ $exit_code -ne 0 ]; then
+    echo "Failed to export $key_type private key. Exit code: $exit_code. Output: $key"
+    exit 1
+  fi
+
+  echo "$key"
+}
+
 # Create wallet
 print_info "Creating wallet..."
 if ! vanacli wallet create --wallet.name default --wallet.hotkey default; then
@@ -79,25 +97,23 @@ if ! vanacli wallet create --wallet.name default --wallet.hotkey default; then
     exit 1
 fi
 
-# Function to export private keys without user interaction
-export_private_key() {
-  local key_type=$1
-  local key=$(vanacli wallet export_private_key --wallet.name default --keytype "$key_type" 2>&1)
-  
-  if [[ $key == *"Error"* ]]; then
-    echo "Failed to export $key_type private key: $key"
-    exit 1
-  fi
-
-  echo "$key"
-}
+# Optional: Wait for a few seconds to ensure the wallet is fully initialized
+sleep 2
 
 # Export private keys for coldkey and hotkey
-print_info "Exporting Coldkey private key..."
 coldkey_private=$(export_private_key coldkey)
-
-print_info "Exporting Hotkey private key..."
 hotkey_private=$(export_private_key hotkey)
+
+# Check if the keys are not empty
+if [ -z "$coldkey_private" ]; then
+    echo "Coldkey private key export returned empty value."
+    exit 1
+fi
+
+if [ -z "$hotkey_private" ]; then
+    echo "Hotkey private key export returned empty value."
+    exit 1
+fi
 
 # Save private keys to private.json
 print_info "Saving private keys to private.json..."
@@ -112,14 +128,6 @@ EOF
 # Save data to private.json
 echo "$json_data" > "$DATA_FILE"
 print_info "Wallet data saved to $DATA_FILE."
-
-# Generate Encryption Keys
-print_info "Generating Encryption Keys..."
-chmod +x keygen.sh
-if ! ./keygen.sh; then
-    echo "Failed to generate encryption keys."
-    exit 1
-fi
 
 # Move generated encryption keys files to the current folder
 print_info "Moving generated encryption key files to the current folder..."
