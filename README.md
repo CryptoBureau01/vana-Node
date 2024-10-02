@@ -21,28 +21,36 @@ Vana raised $25M from Tier1 investors. You can run a validator on your own hardw
 
 # Setup
 
- **Clone the repository**
+ ### Clone the repository
 
   ```bash
    git clone https://github.com/CryptoBuroMaster/vana-Node.git && cd vana-Node
   ```
 
- **You can give both files execute permissions together using a single chmod command.**
+
+ ### You can give both files execute permissions together using a single chmod command.
 
   ```bash
    chmod +x buro-deploy.sh buro-setup.sh
   ```
 
+
  ## Run the setup script 
  
   ```bash
-    ./buro-setup.sh
-   ```
+   ./buro-setup.sh
+  ```
 
-**Final Output:**
- • Private.json will store the Coldkey and Hotkey private keys.
- • The encryption keys will be saved as public_key.asc, 
-  public_key_base64.asc, private_key.asc, and private_key_base64.asc in the current folder.
+
+**Final Output**
+
+- [Private.json](./private.json) will store the Coldkey and Hotkey private keys.
+- The encryption keys will be saved as:
+  - [public_key.asc](./public_key.asc)
+  - [public_key_base64.asc](./public_key_base64.asc)
+  - [private_key.asc](./private_key.asc)
+  - [private_key_base64.asc](./private_key_base64.asc)
+
 
 
 
