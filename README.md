@@ -303,18 +303,13 @@ For non-DLP creators, request from the DLP creator:
 
 ### Setup
 
-1. Ensure you're in the `vana-dlp-chatgpt` directory:
+#### Ensure you're in the `vana-dlp-chatgpt` directory:
+   ```bash
+   cd ..
+   ```
    ```bash
    cd vana-dlp-chatgpt
    ```
-
-2. If you're a non-DLP creator, edit the `.env` file with the information provided by the DLP creator:
-   ```
-   DLP_SATORI_CONTRACT=0x... (DataLiquidityPool address)
-   DLP_TOKEN_SATORI_CONTRACT=0x... (DataLiquidityPoolToken address)
-   PRIVATE_FILE_ENCRYPTION_PUBLIC_KEY_BASE64=... (base64-encoded private key--yes, PUBLIC is a misnomer)
-   ```
-
 ### Fund Validator with DLP Tokens
 
 For DLP creators:
