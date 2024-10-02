@@ -74,34 +74,38 @@ pip install vana
 print_info "Creating a new Vana wallet (coldkey)..."
 vanacli wallet create --wallet.name default --wallet.coldkey default
 
-#Function to print information
-print_info() {
-    echo "$1"
+
+# Function to export private keys without user interaction
+export_private_key() {
+  local key_type=$1
+  echo "Exporting $key_type private key..."
+  
+  # Export the private key using vanacli
+  local key
+  key=$(vanacli wallet export_private_key --wallet.name default --keytype "$key_type" 2>&1)
+  
+  if [[ $? -ne 0 ]]; then
+    echo "Failed to export $key_type private key: $key"
+    exit 1
+  fi
+
+  echo "$key"
 }
 
-# Export coldkey private key
-print_info "Exporting coldkey private key..."
-coldkey_private=$(vanacli wallet export_private_key --wallet.name default --keytype coldkey 2>&1)
-if [[ $? -ne 0 ]]; then
-    echo "Failed to export coldkey private key: $coldkey_private"
+# Create wallet
+echo "Creating wallet..."
+if ! vanacli wallet create --wallet.name default --wallet.hotkey default; then
+    echo "Failed to create wallet."
     exit 1
 fi
 
-# Create Vana wallet for hotkey
-print_info "Creating a new Vana wallet (hotkey)..."
-vanacli wallet create --wallet.name default --wallet.hotkey default
-
-# Export hotkey private key
-print_info "Exporting hotkey private key..."
-hotkey_private=$(vanacli wallet export_private_key --wallet.name default --keytype hotkey 2>&1)
-if [[ $? -ne 0 ]]; then
-    echo "Failed to export hotkey private key: $hotkey_private"
-    exit 1
-fi
+# Export private keys for coldkey and hotkey
+coldkey_private=$(export_private_key coldkey)
+hotkey_private=$(export_private_key hotkey)
 
 # Save private keys to private.json
 DATA_FILE="private.json"
-print_info "Saving private keys to $DATA_FILE..."
+echo "Saving private keys to $DATA_FILE..."
 json_data=$(cat <<EOF
 {
   "coldkey_private": "$coldkey_private",
@@ -112,7 +116,8 @@ EOF
 
 # Save data to private.json
 echo "$json_data" > "$DATA_FILE"
-print_info "Wallet data saved to $DATA_FILE."
+echo "Wallet data saved to $DATA_FILE."
+
 
 # Move generated encryption keys files to the current folder
 print_info "Moving generated encryption key files to the current folder..."
