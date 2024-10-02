@@ -69,54 +69,39 @@ virtualenv venv
 source venv/bin/activate
 pip install vana
 
-# File to save wallet data
-DATA_FILE="private.json"
 
-# Function to export private keys without user interaction
-export_private_key() {
-  local key_type=$1
-  print_info "Exporting $key_type private key..."
-  
-  # Export the private key using vanacli
-  local key
-  key=$(vanacli wallet export_private_key --wallet.name default --keytype "$key_type" 2>&1)
-  local exit_code=$?
-
-  if [ $exit_code -ne 0 ]; then
-    echo "Failed to export $key_type private key. Exit code: $exit_code. Output: $key"
-    exit 1
-  fi
-
-  echo "$key"
+# Function to print information
+print_info() {
+    echo "$1"
 }
 
-# Create wallet
-print_info "Creating wallet..."
-if ! vanacli wallet create --wallet.name default --wallet.hotkey default; then
-    echo "Failed to create wallet."
+# Create Vana wallet for coldkey
+print_info "Creating a new Vana wallet (coldkey)..."
+vanacli wallet create --wallet.name default --wallet.coldkey default
+
+# Export coldkey private key
+print_info "Exporting coldkey private key..."
+coldkey_private=$(vanacli wallet export_private_key --wallet.name default --keytype coldkey 2>&1)
+if [[ $? -ne 0 ]]; then
+    echo "Failed to export coldkey private key: $coldkey_private"
     exit 1
 fi
 
-# Optional: Wait for a few seconds to ensure the wallet is fully initialized
-sleep 2
+# Create Vana wallet for hotkey
+print_info "Creating a new Vana wallet (hotkey)..."
+vanacli wallet create --wallet.name default --wallet.hotkey default
 
-# Export private keys for coldkey and hotkey
-coldkey_private=$(export_private_key coldkey)
-hotkey_private=$(export_private_key hotkey)
-
-# Check if the keys are not empty
-if [ -z "$coldkey_private" ]; then
-    echo "Coldkey private key export returned empty value."
-    exit 1
-fi
-
-if [ -z "$hotkey_private" ]; then
-    echo "Hotkey private key export returned empty value."
+# Export hotkey private key
+print_info "Exporting hotkey private key..."
+hotkey_private=$(vanacli wallet export_private_key --wallet.name default --keytype hotkey 2>&1)
+if [[ $? -ne 0 ]]; then
+    echo "Failed to export hotkey private key: $hotkey_private"
     exit 1
 fi
 
 # Save private keys to private.json
-print_info "Saving private keys to private.json..."
+DATA_FILE="private.json"
+print_info "Saving private keys to $DATA_FILE..."
 json_data=$(cat <<EOF
 {
   "coldkey_private": "$coldkey_private",
