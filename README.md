@@ -230,7 +230,7 @@ Before you start, ensure you have gone through the [Setup](#setup) section.
    git clone https://github.com/CryptoBuroMaster/vana-Node.git
    ```
    ```
-   cd vana-Node/contract/contract
+   cd vana-Node/contract
    ```
 
 ### 2. Install dependencies:
