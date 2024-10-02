@@ -8,12 +8,12 @@ module.exports = {
   networks: {
     satori: {
       url: SATORI_RPC_URL,
-      accounts: [`0x${DEPLOYER_PRIVATE_KEY}`],
+      accounts: [DEPLOYER_PRIVATE_KEY], // No '0x' prefix here
     },
   },
   paths: {
-    sources: "./contracts",
-    tests: "./test",
+    sources: "./", // Adjusted to look for contracts in the current directory
+    tests: "./test", // Assuming tests are in the 'test' directory relative to the config file
     cache: "./cache",
     artifacts: "./artifacts",
   },
