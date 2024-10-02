@@ -277,12 +277,6 @@ Before you start, ensure you have gone through the [Setup](#setup) section.
     - Call updateFileRewardDelay and set it to 0
     - Call addRewardsForContributors with 1000000000000000000000000 (1 million tokens )
 
-### 8. Update the `.env` file in the `vana-dlp-chatgpt` directory:
-   ```
-   DLP_SATORI_CONTRACT=0x... (DataLiquidityPool address)
-   DLP_TOKEN_SATORI_CONTRACT=0x... (DataLiquidityPoolToken address)
-   PRIVATE_FILE_ENCRYPTION_PUBLIC_KEY_BASE64=... (content of public_key_base64.asc)
-   ```
 
 After completing these steps, proceed to the [Validator Setup](#validator-setup) section.
 
@@ -291,35 +285,35 @@ After completing these steps, proceed to the [Validator Setup](#validator-setup)
 
 Follow these steps whether you're a DLP creator or joining an existing DLP.
 
-Before you start, ensure you have gone through the [Setup](#setup) section.
+Before you start, ensure you have gone through the [Setup](#Setup) section.
 
-### Required Information
-
-For non-DLP creators, request from the DLP creator:
-- DLP contract address (DataLiquidityPool)
-- DLP token contract address (DataLiquidityPoolToken)
-- Public key for the DLP validator network (`public_key.asc`)
-- Base64-encoded private key for the DLP validator network (`private_key_base64.asc`)
-
-### Setup
-
-#### Ensure you're in the `vana-dlp-chatgpt` directory:
+## Setup
+### Ensure you're in the `vana-dlp-chatgpt` directory:
    ```bash
    cd ..
    ```
    ```bash
    cd vana-dlp-chatgpt
    ```
+   
+
+
+### Update the `.env` file in the `vana-dlp-chatgpt` directory:
+
+   ```bash
+   sudo nano .env
+   ```
+
+   ```
+   DLP_SATORI_CONTRACT=0x... (DataLiquidityPool address)
+   DLP_TOKEN_SATORI_CONTRACT=0x... (DataLiquidityPoolToken address)
+   PRIVATE_FILE_ENCRYPTION_PUBLIC_KEY_BASE64=... (content of public_key_base64.asc)
+   ```
 ### Fund Validator with DLP Tokens
 
 For DLP creators:
 1. Import DLP token to Metamask using `<DataLiquidityPoolToken address>`
 2. Send 10 tokens to your coldkey address
-
-For non-DLP creators:
-1. Request DLP tokens from the DLP creator
-2. Once received, ensure they are in your coldkey address
-
 
 
 ### Register as a Validator
