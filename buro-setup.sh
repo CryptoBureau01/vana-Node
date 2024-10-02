@@ -70,14 +70,14 @@ source venv/bin/activate
 pip install vana
 
 
-# Function to print information
-print_info() {
-    echo "$1"
-}
-
 # Create Vana wallet for coldkey
 print_info "Creating a new Vana wallet (coldkey)..."
 vanacli wallet create --wallet.name default --wallet.coldkey default
+
+#Function to print information
+print_info() {
+    echo "$1"
+}
 
 # Export coldkey private key
 print_info "Exporting coldkey private key..."
