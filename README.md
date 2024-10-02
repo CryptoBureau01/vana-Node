@@ -224,7 +224,7 @@ Before you start, ensure you have gone through the [Setup](#setup) section.
 
 # Deploy DLP Smart Contracts
 
- 1. Clone the DLP Smart Contract repo:
+### 1. Clone the DLP Smart Contract repo:
    ```bash
    cd ..
    ```
@@ -239,14 +239,19 @@ Before you start, ensure you have gone through the [Setup](#setup) section.
    ```
 
     
- 2. Install dependencies:
+### 2. Install dependencies:
    ```bash
    yarn install
    ```
 
- 3. Export your private key from Metamask (see [official instructions](https://support.metamask.io/managing-my-wallet/secret-recovery-phrase-and-private-keys/how-to-export-an-accounts-private-key)).
+### 3. Export your private key from Metamask (see [official instructions](https://support.metamask.io/managing-my-wallet/secret-recovery-phrase-and-private-keys/how-to-export-an-accounts-private-key)).
 
- 4. Edit the `.env` file in the `vana-dlp-smart-contracts` directory:
+### 4. Edit the `.env` file in the `vana-dlp-smart-contracts` directory:
+
+   ```bash
+   cd vana-dlp-chatgpt
+   ```
+
    ```
    DEPLOYER_PRIVATE_KEY=0x... (your coldkey private key)
    OWNER_ADDRESS=0x... (your coldkey address)
@@ -256,23 +261,23 @@ Before you start, ensure you have gone through the [Setup](#setup) section.
    DLP_TOKEN_SYMBOL=CB
    ```
 
- 5. Deploy contracts:
+### 5. Deploy contracts:
    ```bash
    npx hardhat deploy --network satori --tags DLPDeploy
    ```
    Note the deployed addresses for DataLiquidityPool and DataLiquidityPoolToken.
 
- 6. Congratulations, you've deployed the DLP smart contracts! You can confirm they're up by searching the address for each on the block explorer: 
+### 6. Congratulations, you've deployed the DLP smart contracts! You can confirm they're up by searching the address for each on the block explorer: 
  https://satori.vanascan.io/address/<DataLiquidityPool\>.
 
- 7. Configure the DLP contract:
+### 7. Configure the DLP contract:
     - Visit https://satori.vanascan.io/address/<DataLiquidityPool address>
     - Go to "Write proxy" tab
     - Connect your wallet
     - Call `updateFileRewardDelay` and set it to 0
     - Call `addRewardsForContributors` with 1000000000000000000000000 (1 million tokens)
 
- 8. Update the `.env` file in the `vana-dlp-chatgpt` directory:
+### 8. Update the `.env` file in the `vana-dlp-chatgpt` directory:
    ```
    DLP_SATORI_CONTRACT=0x... (DataLiquidityPool address)
    DLP_TOKEN_SATORI_CONTRACT=0x... (DataLiquidityPoolToken address)
