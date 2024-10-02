@@ -58,6 +58,26 @@ sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 
 python3 --version
 ```
 
+### python3-pip install 
+```
+sudo apt install python3-pip
+```
+
+### latest versions of pip, setuptools, and wheel
+```
+python3 -m pip install --upgrade pip setuptools wheel
+```
+
+### Install build dependencies
+```
+sudo apt install build-essential
+```
+
+### Install virtualenv
+```
+pip install virtualenv
+```
+
 ## 3. Install Poetry
 ```
 curl -sSL https://install.python-poetry.org | python3 -
@@ -115,10 +135,18 @@ npm -v
 
 4. Install Vana CLI:
    ```bash
+   virtualenv venv
+   ```
+
+   ```bash
+   source venv/bin/activate
+   ```
+   
+   ```bash
    pip install vana
    ```
 
-5. Create a wallet:
+6. Create a wallet:
    ```bash
    vanacli wallet create --wallet.name default --wallet.hotkey default
    ```
@@ -128,13 +156,13 @@ npm -v
 
    Follow the prompts to set a secure password. Save the mnemonic phrases securely; you'll need these to recover your wallet if needed.
 
-6. Add Satori Testnet to Metamask:
+7. Add Satori Testnet to Metamask:
    - Network name: Satori Testnet
    - RPC URL: https://rpc.satori.vana.org
    - Chain ID: 14801
    - Currency: VANA
 
-7. Export your private keys. Follow the prompts and securely save the displayed private keys:
+8. Export your private keys. Follow the prompts and securely save the displayed private keys:
    ```bash
    vanacli wallet export_private_key
    Enter wallet name (default):
@@ -149,13 +177,13 @@ npm -v
    Your hotkey private key:
    ```
 
-8. Import your coldkey and hotkey addresses to Metamask:
+9. Import your coldkey and hotkey addresses to Metamask:
    - Click your account icon in MetaMask and select "Import Account"
    - Select "Private Key" as the import method
    - Paste the private key for your coldkey
    - Repeat the process for your hotkey
 
-9. Fund both addresses with testnet VANA:
+10. Fund both addresses with testnet VANA:
    - Visit https://faucet.vana.org
    - Connect your Metamask wallet
    - Request VANA for both your coldkey and hotkey addresses
