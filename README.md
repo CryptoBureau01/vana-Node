@@ -19,10 +19,21 @@ Vana raised $25M from Tier1 investors. You can run a validator on your own hardw
 ## Follow our TG : https://t.me/CryptoBuroOfficial
 
 
-# Setup dependencies
+# Setup
 
+   ###**Clone the repository**
 
+   ```bash
+    git clone https://github.com/CryptoBuroMaster/vana-Node.git && cd vana-Node
+   ```
 
+   **You can give both files execute permissions together using a single chmod command.**
+
+   ```bash
+    chmod +x buro-deploy.sh buro-setup.sh
+   ```
+
+   
 
 # Deploy DLP Smart Contracts
 
