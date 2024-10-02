@@ -235,7 +235,7 @@ Before you start, ensure you have gone through the [Setup](#setup) section.
    cd vana-dlp-smart-contracts
    ```
    ```
-   npm install --global yarn
+   npm install --global yarn --force
    ```
 
     
@@ -249,7 +249,7 @@ Before you start, ensure you have gone through the [Setup](#setup) section.
 ### 4. Edit the `.env` file in the `vana-dlp-smart-contracts` directory:
 
    ```bash
-   cd vana-dlp-chatgpt
+   sudo nano .env
    ```
 
    ```
