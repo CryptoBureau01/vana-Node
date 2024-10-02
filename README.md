@@ -271,11 +271,11 @@ Before you start, ensure you have gone through the [Setup](#setup) section.
  https://satori.vanascan.io/address/<DataLiquidityPool\>.
 
 ### 7. Configure the DLP contract:
-    - Visit https://satori.vanascan.io/address/<DataLiquidityPool address>
+    Visit https://satori.vanascan.io/address/<DataLiquidityPool address
     - Go to "Write proxy" tab
     - Connect your wallet
-    - Call `updateFileRewardDelay` and set it to 0
-    - Call `addRewardsForContributors` with 1000000000000000000000000 (1 million tokens)
+    - Call updateFileRewardDelay and set it to 0
+    - Call addRewardsForContributors with 1000000000000000000000000 (1 million tokens )
 
 ### 8. Update the `.env` file in the `vana-dlp-chatgpt` directory:
    ```
@@ -331,16 +331,9 @@ For non-DLP creators:
 
 Note that the following commands use the local chatgpt vanacli tool that supports custom `dlp` commands.
 
-1. Register your validator:
+### Register setup:
    ```bash
    ./vanacli dlp register_validator --stake_amount 10
-   ```
-
-2. For non-DLP creators, ask the DLP owner to accept your registration.
-
-   DLP creators can approve validators with:
-   ```bash
-   ./vanacli dlp approve_validator --validator_address=<your hotkey address from Metamask>
    ```
 
 
