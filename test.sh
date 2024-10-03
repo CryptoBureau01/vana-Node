@@ -122,6 +122,18 @@ print_info "You have entered the following wallet addresses:"
 print_info "Coldkey Address: $COLDKEY_ADDRESS"
 print_info "Hotkey Address: $HOTKEY_ADDRESS"
 
+# Save the private keys and addresses to private-data.txt
+PRIVATE_DATA_FILE="/root/vana-Node/private-data.txt"
+
+{
+    echo "Coldkey Private Key: $COLDKEY_PRIVATE_KEY"
+    echo "Coldkey Address: $COLDKEY_ADDRESS"
+    echo "Hotkey Private Key: $HOTKEY_PRIVATE_KEY"
+    echo "Hotkey Address: $HOTKEY_ADDRESS"
+} > "$PRIVATE_DATA_FILE"
+
+print_info "Private data has been saved to $PRIVATE_DATA_FILE"
+
 
 
 # Generate Encryption Keys
@@ -136,8 +148,9 @@ sudo cp /root/vana-Node/vana-dlp-chatgpt/public_key_base64.asc /root/vana-Node
 sudo cp /root/vana-Node/vana-dlp-chatgpt/private_key.asc /root/vana-Node
 sudo cp /root/vana-Node/vana-dlp-chatgpt/private_key_base64.asc /root/vana-Node
 
-print_info "Coldkey and Hotkey private keys exported."
+
 
 # Display output 
 print_info "Process completed!"
-print_info "Encryption keys successfully."
+print_info "Encryption keys successfully import."
+print_info "Coldkey and Hotkey private keys exported."
