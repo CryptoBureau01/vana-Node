@@ -75,12 +75,19 @@ vanacli wallet create --wallet.name default --wallet.coldkey default
 echo "Creating a new Vana wallet with hotkey..."
 vanacli wallet create --wallet.name default --wallet.hotkey default
 
+
 # Export private keys for coldkey
 echo "Exporting Coldkey private key..."
-if ! vanacli wallet export_private_key --wallet.name default --keytype coldkey; then
+coldkey_private=$(vanacli wallet export_private_key --wallet.name default --keytype coldkey)
+
+if [[ $? -ne 0 ]]; then
     echo "Failed to export Coldkey private key."
     exit 1
 fi
+
+# Print the Coldkey private key
+echo "Coldkey Private Key: $coldkey_private"
+
 
 # Export private keys for hotkey
 echo "Exporting Hotkey private key..."
@@ -91,14 +98,22 @@ fi
 
 # Generate Encryption Keys
 echo "Generating Encryption Keys..."
-if ! ./keygen.sh; then
-    echo "Failed to generate encryption keys."
+if ! ./keygen.sh > keygen_output.log 2>&1; then
+    echo "Failed to generate encryption keys. Check keygen_output.log for details."
     exit 1
 fi
 
+# Copy encryption keys to the current folder
+echo "Copying encryption keys to the current folder..."
+sudo cp /root/vana-Node/vana-dlp-chatgpt/public_key.asc /root/vana-Node
+sudo cp /root/vana-Node/vana-dlp-chatgpt/public_key_base64.asc /root/vana-Node
+sudo cp /root/vana-Node/vana-dlp-chatgpt/private_key.asc /root/vana-Node
+sudo cp /root/vana-Node/vana-dlp-chatgpt/private_key_base64.asc /root/vana-Node
+
+
 echo "Coldkey and Hotkey private keys exported."
-echo "Encryption keys generated: public_key.asc, public_key_base64.asc, private_key.asc, private_key_base64.asc"
 
 
 # Display output 
 echo "Process completed!"
+echo "Encryption keys successfully."
