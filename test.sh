@@ -1,39 +1,38 @@
 #!/bin/bash
 
-# Function to print information
+# Function to print messages
 print_info() {
-    echo -e "\e[32m$1\e[0m"
+    echo -e "\033[1;32m$1\033[0m"
 }
 
-# Update system
-print_info "Updating system..."
-sudo apt update && sudo apt upgrade -y
+print_error() {
+    echo -e "\033[1;31m$1\033[0m"
+}
 
-# Install Python 3.11
-print_info "Installing Python 3.11..."
-sudo apt install software-properties-common -y
-sudo add-apt-repository ppa:deadsnakes/ppa -y
-sudo apt update
-sudo apt install python3.11 python3.11-venv python3.11-dev -y
-sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 1
-python3 --version
-
-# Install Poetry
-print_info "Installing Poetry..."
-curl -sSL https://install.python-poetry.org | python3 -
-echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
-source ~/.bashrc
-poetry --version
+# Ensure the script is run as root
+if [ "$EUID" -ne 0 ]; then
+    print_error "Please run as root"
+    exit
+fi
 
 # Get OpenAI API Key from user
 print_info "Enter your OpenAI API Key (get it from https://platform.openai.com/account/api-keys):"
 read -p "OpenAI API Key: " OPENAI_API_KEY
 
+# Read contract addresses from the file
+MOKSHA_CONTRACT="/root/vana-Node/moksha-contract.txt"
+if [[ ! -f "$MOKSHA_CONTRACT" ]]; then
+    print_error "Moksha contract file not found!"
+    exit 1
+fi
+
+DLP_MOKSHA_CONTRACT=$(grep "DataLiquidityPool Contract Address:" "$MOKSHA_CONTRACT" | awk '{print $NF}')
+DLP_TOKEN_MOKSHA_CONTRACT=$(grep "DataLiquidityPoolToken Contract Address:" "$MOKSHA_CONTRACT" | awk '{print $NF}')
+
 # Update .env file in vana-dlp-chatgpt
 print_info "Configuring .env file for vana-dlp-chatgpt..."
-cd $HOME/vana-Node/vana-dlp-chatgpt
+cd /root/vana-Node/vana-dlp-chatgpt
 
-# Get the public key for encryption
 PUBLIC_KEY_BASE64=$(cat public_key_base64.asc)
 
 cat > .env <<EOL
@@ -61,7 +60,6 @@ read -p ""
 
 # Register as a Validator
 print_info "Registering as a validator..."
-cd $HOME/vana-Node/vana-dlp-chatgpt
 ./vanacli dlp register_validator --stake_amount 10
 
 print_info "Approving validator..."
@@ -82,12 +80,12 @@ After=network.target
 [Service]
 Type=simple
 User=root
-WorkingDirectory=$HOME/vana-dlp-chatgpt
+WorkingDirectory=/root/vana-Node/vana-dlp-chatgpt
 ExecStart=${POETRY_PATH} run python -m chatgpt.nodes.validator
 Restart=on-failure
 RestartSec=10
-Environment=PATH=$HOME/.local/bin:/usr/local/bin:/usr/bin:/bin:$HOME/vana-dlp-chatgpt/myenv/bin
-Environment=PYTHONPATH=$HOME/vana-dlp-chatgpt
+Environment=PATH=/root/.local/bin:/usr/local/bin:/usr/bin:/bin:/root/vana-dlp-chatgpt/myenv/bin
+Environment=PYTHONPATH=/root/vana-dlp-chatgpt
 
 [Install]
 WantedBy=multi-user.target
