@@ -59,6 +59,29 @@ print_info "Installing dependencies..."
 poetry install
 
 
+print_info "All dependencies have been successfully installed."
+print_info "All packages are up to date."
+
+# Display the installed version of Git
+echo "Checking Git version..."
+git --version
+
+# Display the installed version of Python 3.11
+echo "Checking Python 3.11 version..."
+python3 --version
+
+# Display the installed version of Poetry
+echo "Checking Poetry version..."
+poetry --version
+
+# Display the installed version of Node.js
+echo "Checking Node.js version..."
+node -v
+
+# Display the installed version of npm (Node Package Manager)
+echo "Checking npm version..."
+npm -v
+
 
 # Ensure the script is run as root
 if [ "$EUID" -ne 0 ]; then
