@@ -67,34 +67,27 @@ pip install vana
 # Create wallet
 echo "Creating wallet..."
 
-# Export coldkey private key
-echo "Creating a new Vana wallet with coldkey..."
-vanacli wallet create --wallet.name default --wallet.coldkey default
-
-# Export hotkey private key
-echo "Creating a new Vana wallet with hotkey..."
+# Export coldkey/hotkey phase key :
+echo "Creating a new Vana wallet with coldkey/hotkey..."
 vanacli wallet create --wallet.name default --wallet.hotkey default
 
 
-# Export private keys for coldkey
+# Export Coldkey private key (interactive prompt)
 echo "Exporting Coldkey private key..."
-coldkey_private=$(vanacli wallet export_private_key --wallet.name default --keytype coldkey)
+vanacli wallet export_private_key
 
-if [[ $? -ne 0 ]]; then
-    echo "Failed to export Coldkey private key."
-    exit 1
-fi
+# Notify user to follow prompts
+echo "Please enter the wallet name (default), key type (coldkey), and password when prompted."
+echo "Your coldkey private key will be displayed after you enter the correct information."
 
-# Print the Coldkey private key
-echo "Coldkey Private Key: $coldkey_private"
-
-
-# Export private keys for hotkey
+# Export Hotkey private key (interactive prompt)
 echo "Exporting Hotkey private key..."
-if ! vanacli wallet export_private_key --wallet.name default --keytype hotkey; then
-    echo "Failed to export Hotkey private key."
-    exit 1
-fi
+vanacli wallet export_private_key
+
+# Notify user again to follow prompts for hotkey
+echo "Please enter the wallet name (default), key type (hotkey), and password when prompted."
+echo "Your hotkey private key will be displayed after you enter the correct information."
+
 
 # Generate Encryption Keys
 echo "Generating Encryption Keys..."
@@ -117,3 +110,5 @@ echo "Coldkey and Hotkey private keys exported."
 # Display output 
 echo "Process completed!"
 echo "Encryption keys successfully."
+echo "default" | vanacli wallet export_private_key
+
