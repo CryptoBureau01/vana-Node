@@ -57,6 +57,19 @@ Vana raised $25M from Tier1 investors. You can run a validator on your own hardw
 
 # Deploy DLP Smart Contracts
 
+## Moksha Contract Deploy script 
+ 
+  ```bash
+   ./buro-moksha.sh
+  ```
+
+**Important Links:**
+
+- Faucet, Contract Verify with ChatGpt, Moksha Explorer importent Link .
+  - Faucet : https://faucet.vana.org
+  - ChatGpt API : https://platform.openai.com/settings/profile?tab=api-keys
+  - Explorer : https://moksha.vanascan.io/
+ 
 
 
 
