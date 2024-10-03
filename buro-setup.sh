@@ -144,10 +144,15 @@ if [ "$wallet_choice" -eq 1 ]; then
     PRIVATE_DATA_FILE="/root/vana-Node/private-data.txt"
 
     {
-        echo "Coldkey Private Key: $COLDKEY_PRIVATE_KEY"
+        # ColdKey Data
         echo "Coldkey Address: $COLDKEY_ADDRESS"
-        echo "Hotkey Private Key: $HOTKEY_PRIVATE_KEY"
+        echo "Coldkey Private Key: $COLDKEY_PRIVATE_KEY"
+        
+
+        # HotKey Data
         echo "Hotkey Address: $HOTKEY_ADDRESS"
+        echo "Hotkey Private Key: $HOTKEY_PRIVATE_KEY"
+        
      } > "$PRIVATE_DATA_FILE"
 
     print_info "Private data has been saved to $PRIVATE_DATA_FILE"
@@ -199,10 +204,15 @@ elif [ "$wallet_choice" -eq 2 ]; then
     PRIVATE_DATA_FILE="/root/vana-Node/private-data.txt"
 
     {
-        echo "Coldkey Private Key: $COLDKEY_PRIVATE_KEY"
+        # ColdKey Data
         echo "Coldkey Address: $COLDKEY_ADDRESS"
-        echo "Hotkey Private Key: $HOTKEY_PRIVATE_KEY"
+        echo "Coldkey Private Key: $COLDKEY_PRIVATE_KEY"
+        
+
+        # HotKey Data
         echo "Hotkey Address: $HOTKEY_ADDRESS"
+        echo "Hotkey Private Key: $HOTKEY_PRIVATE_KEY"
+        
      } > "$PRIVATE_DATA_FILE"
 
     print_info "Private data has been saved to $PRIVATE_DATA_FILE"
