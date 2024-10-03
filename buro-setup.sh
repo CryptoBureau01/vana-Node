@@ -91,10 +91,9 @@ echo "Your hotkey private key will be displayed after you enter the correct info
 
 # Generate Encryption Keys
 echo "Generating Encryption Keys..."
-if ! ./keygen.sh > keygen_output.log 2>&1; then
-    echo "Failed to generate encryption keys. Check keygen_output.log for details."
-    exit 1
-fi
+chmod +x keygen.sh
+ ./keygen.sh
+
 
 # Copy encryption keys to the current folder
 echo "Copying encryption keys to the current folder..."
