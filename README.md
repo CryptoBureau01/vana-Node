@@ -31,7 +31,7 @@ Vana raised $25M from Tier1 investors. You can run a validator on your own hardw
  ### You can give both files execute permissions together using a single chmod command.
 
   ```bash
-   chmod +x buro-deploy.sh buro-setup.sh wallet.sh
+   chmod +x buro-deploy.sh buro-setup.sh
   ```
 
 
