@@ -61,6 +61,18 @@ print_info "Please provide the deployed contract addresses."
 read -p "Enter DataLiquidityPool Contract Address: " DLP_MOKSHA_CONTRACT
 read -p "Enter DataLiquidityPoolToken Contract Address: " DLP_TOKEN_MOKSHA_CONTRACT
 
+# Save the Moksha-Contract to moksha-contract.txt
+MOKSHA_CONTRACT="/root/vana-Node/moksha-contract.txt"
+
+{
+    # Moksha-Contract Data
+    echo "DataLiquidityPool Contract Address: $DLP_MOKSHA_CONTRACT"
+    echo "DataLiquidityPoolToken Contract Address: $DLP_TOKEN_MOKSHA_CONTRACT"
+} > "$MOKSHA_CONTRACT"
+
+print_info "Moksha-Contract has been saved to $MOKSHA_CONTRACT"
+
+
 # Validate if the input is empty
 if [ -z "$DLP_MOKSHA_CONTRACT" ] || [ -z "$DLP_TOKEN_MOKSHA_CONTRACT" ]; then
   print_error "Error: Both contract addresses must be provided."
