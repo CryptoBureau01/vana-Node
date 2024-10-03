@@ -31,7 +31,7 @@ Vana raised $25M from Tier1 investors. You can run a validator on your own hardw
  ### You can give both files execute permissions together using a single chmod command.
 
   ```bash
-   chmod +x buro-deploy.sh buro-setup.sh
+   chmod +x buro-setup.sh buro-moksha.sh
   ```
 
 
@@ -68,7 +68,8 @@ Vana raised $25M from Tier1 investors. You can run a validator on your own hardw
 - Faucet, Contract Verify with ChatGpt, Moksha Explorer importent Link .
   - Faucet : https://faucet.vana.org
   - ChatGpt API : https://platform.openai.com/settings/profile?tab=api-keys
-  - Explorer : https://moksha.vanascan.io/
+  - Moksha Explorer : https://moksha.vanascan.io/
+  - Satori Explorer : https://satori.vanascan.io/
  
 
 
