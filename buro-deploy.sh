@@ -39,8 +39,8 @@ yarn --version
 
 # Input information from user
 print_info "Enter Moksha DLP Smart Contract Information:"
-read -p "Enter Private Key: " DEPLOYER_PRIVATE_KEY
-read -p "Enter Owner Address: " OWNER_ADDRESS
+read -p "Enter ColdKey Private Key: " DEPLOYER_PRIVATE_KEY
+read -p "Enter ColdKey Owner Address: " OWNER_ADDRESS
 read -p "Enter DLP Name: " DLP_NAME
 read -p "Enter DLP Token Name: " DLP_TOKEN_NAME
 read -p "Enter DLP Token Symbol: " DLP_TOKEN_SYMBOL
