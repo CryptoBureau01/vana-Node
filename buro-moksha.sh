@@ -25,12 +25,49 @@ print_info "Installing Git..."
 sudo apt install git -y
 git --version
 
+
+# Install Python 3.11
+print_info "Installing Python 3.11..."
+sudo apt install software-properties-common -y
+sudo add-apt-repository ppa:deadsnakes/ppa -y
+sudo apt update
+sudo apt install python3.11 python3.11-venv python3.11-dev -y
+sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 1
+python3 --version
+
+# Install pip
+print_info "Installing Python pip..."
+sudo apt install python3-pip -y
+python3 -m pip install --upgrade pip setuptools wheel
+
+# Install build dependencies
+print_info "Installing build-essential..."
+sudo apt install build-essential -y
+
+# Install virtualenv
+print_info "Installing virtualenv..."
+pip install virtualenv
+
+# Install Poetry
+print_info "Installing Poetry..."
+curl -sSL https://install.python-poetry.org | python3 -
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+poetry --version
+
+
 # Install Node.js and npm
 print_info "Installing Node.js and npm..."
 curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
 sudo apt install -y nodejs
 node -v
 npm -v
+
+
+# Install dependencies using Poetry
+print_info "Installing dependencies..."
+poetry install
+
 
 # Install Yarn
 print_info "Installing Yarn..."
