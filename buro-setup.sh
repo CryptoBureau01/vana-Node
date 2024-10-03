@@ -68,11 +68,11 @@ pip install vana
 echo "Creating wallet..."
 
 # Export coldkey private key
-print_info "Creating a new Vana wallet with coldkey..."
+echo "Creating a new Vana wallet with coldkey..."
 vanacli wallet create --wallet.name default --wallet.coldkey default
 
 # Export hotkey private key
-print_info "Creating a new Vana wallet with hotkey..."
+echo "Creating a new Vana wallet with hotkey..."
 vanacli wallet create --wallet.name default --wallet.hotkey default
 
 # Export private keys for coldkey
