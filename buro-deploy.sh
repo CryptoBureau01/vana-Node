@@ -104,7 +104,7 @@ read -p "OpenAI API Key: " OPENAI_API_KEY
 
 # Update .env file in vana-dlp-chatgpt
 print_info "Configuring .env file for vana-dlp-chatgpt..."
-cd $HOME/vana-dlp-chatgpt
+cd $HOME/root/vana-Node/vana-dlp-chatgpt
 
 PUBLIC_KEY_BASE64=$(cat public_key_base64.asc)
 
@@ -133,7 +133,7 @@ read -p ""
 
 # Register as a Validator
 print_info "Registering as a validator..."
-cd $HOME/vana-dlp-chatgpt
+cd $HOME/root/vana-Node/vana-dlp-chatgpt
 ./vanacli dlp register_validator --stake_amount 10
 
 print_info "Approving validator..."
