@@ -145,6 +145,7 @@ send "moksha\r"
 expect eof
 EOF
 
+read -p ""
 
 # Register as a Validator
 print_info "Registering as a validator..."
