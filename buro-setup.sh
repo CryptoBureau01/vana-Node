@@ -227,7 +227,7 @@ elif [ "$wallet_choice" -eq 2 ]; then
     print_info ""
     # Restore coldkey wallet
     read -p "Enter your Coldkey Mnemonic Phrase: " COLDKEY_MNEMONIC
-    ./vanacli wallet regen_coldkey --mnemonic "$COLDKEY_MNEMONIC" --wallet.path /root/.vana/wallets --wallet.name default
+    ./vanacli wallet regen_coldkey --mnemonic $COLDKEY_MNEMONIC --wallet.path /root/.vana/wallets --wallet.name default
 
     print_info ""
     echo "Coldkey wallet has been restored."
@@ -236,7 +236,7 @@ elif [ "$wallet_choice" -eq 2 ]; then
     print_info ""
     # Restore hotkey wallet
     read -p "Enter your Hotkey Mnemonic Phrase: " HOTKEY_MNEMONIC
-    vanacli wallet regen_hotkey --mnemonic "$HOTKEY_MNEMONIC" --wallet.path /root/.vana/wallets --wallet.name default
+    vanacli wallet regen_hotkey --mnemonic $HOTKEY_MNEMONIC --wallet.path /root/.vana/wallets --wallet.name default
 
     print_info ""
     echo "Hotkey wallet has been restored."
