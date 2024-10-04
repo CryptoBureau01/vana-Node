@@ -179,6 +179,34 @@ Site : [Vana](https://www.vana.org/) | Docs : [Vana Docs](https://docs.oceanprot
 
 
 
+# After Setup the All Scripts:
+
+## Check DLP Node Logs:
+
+- **Validator Monitoring**:
+  - You can monitor the validator logs using:
+    ```bash
+    journalctl -u vana.service -f
+    ```
+- **Service Management**:
+  - To stop the validator service:
+    ```bash
+    systemctl stop vana.service
+    ```
+  - To start the validator service:
+    ```bash
+    systemctl start vana.service
+    ```
+  - To check the service status:
+    ```bash
+    systemctl status vana.service
+    ```
+
+### Disclaimer:
+
+- **Testnet Environment**: This setup is intended for the Moksha testnet. Do not use mainnet private keys or tokens.
+- **Updates**: The repositories and commands may change over time. Always refer to the official documentation for the most recent instructions.
+- **Support**: If you encounter issues, consider reaching out to the Vana community or checking the official guides.
 
 
 
