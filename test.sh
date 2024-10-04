@@ -93,15 +93,35 @@ npm -v
 print_info "Enter your OpenAI API Key (get it from https://platform.openai.com/account/api-keys):"
 read -p "OpenAI API Key: " OPENAI_API_KEY
 
-# Read contract addresses from the file
+# Read contract addresses and details from the file
 MOKSHA_CONTRACT="/root/vana-Node/moksha-contract.txt"
 if [[ ! -f "$MOKSHA_CONTRACT" ]]; then
     print_error "Moksha contract file not found!"
     exit 1
 fi
 
+# Extract contract details from the moksha-contract.txt file
+OWNER_ADDRESS=$(grep "Owner Address:" "$MOKSHA_CONTRACT" | awk '{print $NF}')
+DLP_NAME=$(grep "DLP Name:" "$MOKSHA_CONTRACT" | awk '{print $NF}')
+DLP_TOKEN_NAME=$(grep "DLP Token Name:" "$MOKSHA_CONTRACT" | awk '{print $NF}')
+DLP_TOKEN_SYMBOL=$(grep "DLP Token Symbol:" "$MOKSHA_CONTRACT" | awk '{print $NF}')
 DLP_MOKSHA_CONTRACT=$(grep "DataLiquidityPool Contract Address:" "$MOKSHA_CONTRACT" | awk '{print $NF}')
 DLP_TOKEN_MOKSHA_CONTRACT=$(grep "DataLiquidityPoolToken Contract Address:" "$MOKSHA_CONTRACT" | awk '{print $NF}')
+
+# Display contract details
+print_info "Contract Owner Address: $OWNER_ADDRESS"
+print_info ""
+print_info "DLP Name: $DLP_NAME"
+print_info "DLP Token Name: $DLP_TOKEN_NAME"
+print_info "DLP Token Symbol: $DLP_TOKEN_SYMBOL"
+print_info "DataLiquidityPool Contract Address: $DLP_MOKSHA_CONTRACT"
+print_info "DataLiquidityPoolToken Contract Address: $DLP_TOKEN_MOKSHA_CONTRACT"
+
+# Confirm with the user that all the details are correct
+print_info "Please review the above contract details to confirm if everything is correct."
+print_info ""
+read -p "If everything is correct, press Enter to continue or Ctrl+C to abort."
+
 
 # Update .env file in vana-dlp-chatgpt
 print_info "Configuring .env file for vana-dlp-chatgpt..."
@@ -278,10 +298,10 @@ fi
 
 # Step 7
 print_info "Checking service status..."
-if systemctl status vana.service; then
+if systemctl is-active --quiet vana.service; then
     print_info "Step 7 Completed!"
 else
-    print_error "This Step 7 not completed: Checking service status failed!"
+    print_error "This Step 7 not completed: Vana validator service is not running!"
 fi
 
 # Step 8
@@ -291,3 +311,4 @@ if journalctl -u vana.service -f; then
 else
     print_error "This Step 8 not completed: Displaying validator logs failed!"
 fi
+
