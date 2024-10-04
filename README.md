@@ -137,7 +137,6 @@ Site : [Vana](https://www.vana.org/) | Docs : [Vana Docs](https://docs.oceanprot
   ```
 
  ## Note :
-     - This script is designed to automate the setup and deployment process for running a Vana validator. It handles everything from updating the system, installing necessary tools, setting up Python, Git, and Node.js environments, to deploying Moksha DLP smart contracts. Below is a step-by-step explanation of how the script works:
 
   - **Function Definitions :**
       - `print_info`: Prints messages in green to provide informative updates to the user.
