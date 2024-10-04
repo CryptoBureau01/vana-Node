@@ -146,12 +146,26 @@ if [[ -f "$MOKSHA_CONTRACT" ]]; then
 fi
 
 {
-    echo "Owner Address: $OWNER_ADDRESS"                 
+    # Moksha Contract Data :
+    echo ""
+    echo ""
+    echo "Owner Address: $OWNER_ADDRESS"
+    echo ""
+    echo ""
     echo "DLP Name: $DLP_NAME"
+    echo ""
     echo "DLP Token Name: $DLP_TOKEN_NAME"
+    echo ""
     echo "DLP Token Symbol: $DLP_TOKEN_SYMBOL"
+    echo ""
+    echo ""
     echo "DataLiquidityPool Contract Address: $DLP_MOKSHA_CONTRACT"
+    echo ""
     echo "DataLiquidityPoolToken Contract Address: $DLP_TOKEN_MOKSHA_CONTRACT"
+    echo ""
+    echo ""
+    echo "Now, please import your contract address in MetaMask: $DLP_TOKEN_MOKSHA_CONTRACT."
+    echo ""
 } > "$MOKSHA_CONTRACT"
 
 
@@ -179,7 +193,7 @@ print_info "Your Contract DataLiquidityPoolToken Contract Address: $DLP_TOKEN_MO
 print_info "" 
 print_info ""
 print_info ""
-print_info "Now, please import your contract address in MetaMask: $DLP_MOKSHA_CONTRACT."
+print_info "Now, please import your contract address in MetaMask: $DLP_TOKEN_MOKSHA_CONTRACT."
 print_info ""
 print_info "Deployment completed successfully!"
 
