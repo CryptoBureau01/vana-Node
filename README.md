@@ -48,6 +48,20 @@ Site : [Vana](https://www.vana.org/) | Docs : [Vana Docs](https://docs.oceanprot
    ./buro-setup.sh
   ```
 
+ ## Backup Your Private key
+
+ ```bash
+  sudo cp /root/vana-Node/private-data.txt /root/.vana
+
+ ```
+
+ ## Export Your Privete key :
+ 
+ ```bash
+ nano /root/.vana/private-data.txt
+```
+
+
 
  ## Note :
 
