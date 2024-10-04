@@ -126,44 +126,61 @@ if [ "$wallet_choice" -eq 1 ]; then
     vanacli wallet export_private_key
 
     # Step=>4
-    print_info "Now Please Verfiy Your Phrase/ Private Key/ Address..."
+    print_info ""
+    print_info "Now Please Verfiy Your Private Key/ Address..."
+    print_info ""
 
-    # Restore coldkey wallet
-    read -p "Enter your Coldkey Mnemonic Phrase: " COLDKEY_MNEMONIC
-    vanacli wallet regen_coldkey --mnemonic "$COLDKEY_MNEMONIC"
-
-    # Restore hotkey wallet
+    print_info ""
+    print_info "Now Please Enter Your Mnemonic Word Date :"
+    print_info ""
+    print_info "Now Please Enter ColdKey Mnemonic Word"
+    read -p "Enter your coldkey Mnemonic Phrase: " COLDKEY_MNEMONIC
+    print_info ""
+    print_info "Now Please Enter HotKey Mnemonic Word"
     read -p "Enter your Hotkey Mnemonic Phrase: " HOTKEY_MNEMONIC
-    vanacli wallet regen_hotkey --mnemonic "$HOTKEY_MNEMONIC"
+
+
     
     # Prompt user to input private keys manually
     print_info "Please enter your private keys manually:"
-
+    print_info ""
+    
     read -p "Enter Coldkey Private Key: " COLDKEY_PRIVATE_KEY
+    print_info ""
     read -p "Enter Hotkey Private Key: " HOTKEY_PRIVATE_KEY
 
+
+    print_info ""
     print_info "Please import your both private keys in metamask && copy both your address :"
 
+    print_info ""
     # Prompt user to input wallet addresses manually
     print_info "Please enter your wallet addresses manually:"
 
     read -p "Enter Coldkey Address: " COLDKEY_ADDRESS
+    print_info ""
     read -p "Enter Hotkey Address: " HOTKEY_ADDRESS
 
 
     # Step=>5
+    print_info ""
     # Display the inputted private keys
+    print_info ""
     print_info "You have entered the following private keys:"
     print_info "Coldkey Private Key: $COLDKEY_PRIVATE_KEY"
     print_info "Hotkey Private Key: $HOTKEY_PRIVATE_KEY"
 
     # Display the inputted wallet addresses
+    print_info ""
     print_info "You have entered the following wallet addresses:"
+    print_info ""
     print_info "Coldkey Address: $COLDKEY_ADDRESS"
+    print_info ""
     print_info "Hotkey Address: $HOTKEY_ADDRESS"
 
 
     # Step=>6
+    print_info ""
     # Save the private keys and addresses to private-data.txt
     PRIVATE_DATA_FILE="/root/vana-Node/private-data.txt"
 
@@ -175,62 +192,98 @@ if [ "$wallet_choice" -eq 1 ]; then
     fi
     
     {
-        # ColdKey Data
+        #Vana-Node Wallet Private Data
+        
+        echo ""
+        # ColdKey Wallet Data
+        echo ""
         echo "Coldkey Address: $COLDKEY_ADDRESS"
         echo "Coldkey Private Key: $COLDKEY_PRIVATE_KEY"
-        
+        echo "Coldkey Mnemonic words : $COLDKEY_MNEMONIC"
+        echo ""
 
-        # HotKey Data
+        echo ""
+        # HotKey Wallet Data
         echo "Hotkey Address: $HOTKEY_ADDRESS"
         echo "Hotkey Private Key: $HOTKEY_PRIVATE_KEY"
+        echo "Hotkey Mnemonic words : $HOTKEY_MNEMONIC"
         
      } > "$PRIVATE_DATA_FILE"
 
     print_info "Private data has been saved to $PRIVATE_DATA_FILE"
-
+    print_info ""
     print_info "Wallet Creating successfully."
 
     
 elif [ "$wallet_choice" -eq 2 ]; then
 
     # Step=>1
+    
+    print_info ""
     # Restore wallets using mnemonics
     print_info "Restoring coldkey and hotkey wallets using mnemonic phrases."
-
+    print_info ""
+    
+    print_info ""
     # Restore coldkey wallet
     read -p "Enter your Coldkey Mnemonic Phrase: " COLDKEY_MNEMONIC
-    vanacli wallet regen_coldkey --mnemonic "$COLDKEY_MNEMONIC"
+    ./vanacli wallet regen_coldkey --mnemonic "$COLDKEY_MNEMONIC" --wallet.path /root/.vana/wallets --wallet.name default
 
+    print_info ""
+    echo "Coldkey wallet has been restored."
+    print_info ""
+
+    print_info ""
     # Restore hotkey wallet
     read -p "Enter your Hotkey Mnemonic Phrase: " HOTKEY_MNEMONIC
-    vanacli wallet regen_hotkey --mnemonic "$HOTKEY_MNEMONIC"
+    vanacli wallet regen_hotkey --mnemonic "$HOTKEY_MNEMONIC" --wallet.path /root/.vana/wallets --wallet.name default
 
+    print_info ""
+    echo "Hotkey wallet has been restored."
+    print_info ""
+
+    print_info ""
     # Prompt user to input private keys manually
     print_info "Please enter your private keys manually:"
-
+    print_info ""
+    
     read -p "Enter Coldkey Private Key: " COLDKEY_PRIVATE_KEY
+    print_info ""
     read -p "Enter Hotkey Private Key: " HOTKEY_PRIVATE_KEY
 
+    print_info ""
+    print_info ""
     # Prompt user to input wallet addresses manually
     print_info "Please enter your wallet addresses manually:"
 
+    print_info ""
     read -p "Enter Coldkey Address: " COLDKEY_ADDRESS
+    print_info ""
     read -p "Enter Hotkey Address: " HOTKEY_ADDRESS
 
 
     # Step=>2
+    print_info ""
     # Display the inputted private keys
+    print_info ""
     print_info "You have entered the following private keys:"
+    print_info ""
     print_info "Coldkey Private Key: $COLDKEY_PRIVATE_KEY"
+    print_info ""
     print_info "Hotkey Private Key: $HOTKEY_PRIVATE_KEY"
+    print_info ""
 
     # Display the inputted wallet addresses
+    print_info ""
     print_info "You have entered the following wallet addresses:"
+    print_info ""
     print_info "Coldkey Address: $COLDKEY_ADDRESS"
+    print_info ""
     print_info "Hotkey Address: $HOTKEY_ADDRESS"
 
 
     # Step=>3
+    print_info ""
     # Save the private keys and addresses to private-data.txt
     PRIVATE_DATA_FILE="/root/vana-Node/private-data.txt"
 
@@ -242,19 +295,26 @@ elif [ "$wallet_choice" -eq 2 ]; then
     fi
     
     {
-        # ColdKey Data
+        #Vana-Node Wallet Private Data
+        
+        echo ""
+        # ColdKey Wallet Data
+        echo ""
         echo "Coldkey Address: $COLDKEY_ADDRESS"
         echo "Coldkey Private Key: $COLDKEY_PRIVATE_KEY"
-        
+        echo "Coldkey Mnemonic words : $COLDKEY_MNEMONIC"
+        echo ""
 
-        # HotKey Data
+        echo ""
+        # HotKey Wallet Data
         echo "Hotkey Address: $HOTKEY_ADDRESS"
         echo "Hotkey Private Key: $HOTKEY_PRIVATE_KEY"
+        echo "Hotkey Mnemonic words : $HOTKEY_MNEMONIC"
         
      } > "$PRIVATE_DATA_FILE"
 
     print_info "Private data has been saved to $PRIVATE_DATA_FILE"
-
+    print_info ""
     print_info "Wallet restoration completed. Please verify your coldkey and hotkey wallets."
 else
     print_error "Invalid choice. Exiting..."
@@ -263,12 +323,13 @@ fi
 
 
 # Generate Encryption Keys
-
+print_info ""
 print_info "Generating Encryption Keys..."
 chmod +x keygen.sh
 ./keygen.sh
 
 # Copy encryption keys to the current folder
+print_info ""
 print_info "Copying encryption keys to the current folder..."
 sudo cp /root/vana-Node/vana-dlp-chatgpt/public_key.asc /root/vana-Node
 sudo cp /root/vana-Node/vana-dlp-chatgpt/public_key_base64.asc /root/vana-Node
@@ -278,6 +339,8 @@ sudo cp /root/vana-Node/vana-dlp-chatgpt/private_key_base64.asc /root/vana-Node
 
 
 # Display output 
+print_info ""
+print_info ""
 print_info "Process completed!"
 print_info "Encryption keys successfully import."
 print_info "Coldkey and Hotkey private keys exported."
