@@ -167,6 +167,13 @@ if [ "$wallet_choice" -eq 1 ]; then
     # Save the private keys and addresses to private-data.txt
     PRIVATE_DATA_FILE="/root/vana-Node/private-data.txt"
 
+    # Check if the file exists, if yes, delete it
+    if [[ -f "$PRIVATE_DATA_FILE" ]]; then
+       print_info "Existing private-data.txt found. Deleting the old file..."
+       rm "$PRIVATE_DATA_FILE"
+       print_info "Old private-data.txt deleted."
+    fi
+    
     {
         # ColdKey Data
         echo "Coldkey Address: $COLDKEY_ADDRESS"
@@ -227,6 +234,13 @@ elif [ "$wallet_choice" -eq 2 ]; then
     # Save the private keys and addresses to private-data.txt
     PRIVATE_DATA_FILE="/root/vana-Node/private-data.txt"
 
+    # Check if the file exists, if yes, delete it
+    if [[ -f "$PRIVATE_DATA_FILE" ]]; then
+       print_info "Existing private-data.txt found. Deleting the old file..."
+       rm "$PRIVATE_DATA_FILE"
+       print_info "Old private-data.txt deleted."
+    fi
+    
     {
         # ColdKey Data
         echo "Coldkey Address: $COLDKEY_ADDRESS"
