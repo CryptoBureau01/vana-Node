@@ -63,7 +63,7 @@ Vana raised $25M from Tier1 investors. You can run a validator on your own hardw
  ## Moksha Contract Deploy Script 
  
   ```bash
-   ./buro-moksha.sh
+   ./buro-moksha-contract.sh
   ```
 
 **Note :**
