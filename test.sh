@@ -18,6 +18,8 @@ fi
 # Update system
 print_info "Updating system..."
 sudo apt update && sudo apt upgrade -y
+sudo apt-get install expect
+
 
 # Install Git
 print_info "Installing Git..."
@@ -130,6 +132,20 @@ print_info "Send 10 of your DLP tokens to your coldkey and hotkey addresses."
 print_info "Press Enter after you have funded your wallets with DLP tokens..."
 read -p ""
 
+# Your ColdKey Wallet Balance check automation :
+print_info "Checking wallet balance..."
+expect << EOF
+spawn ./vanacli wallet balance
+expect "Enter wallets path (~/.vana/wallets/):"
+send "~/.vana/wallets/\r"
+expect "Enter wallet name (default):"
+send "default\r"
+expect "Enter network [vana/satori/moksha/local/test/archive] (vana):"
+send "moksha\r"
+expect eof
+EOF
+
+
 # Register as a Validator
 print_info "Registering as a validator..."
 ./vanacli dlp register_validator --stake_amount 10
@@ -176,15 +192,4 @@ systemctl status vana.service
 print_info "Displaying validator logs..."
 journalctl -u vana.service -f
 
-# Balance check automation
-print_info "Checking wallet balance..."
-expect << EOF
-spawn ./vanacli wallet balance
-expect "Enter wallets path (~/.vana/wallets/):"
-send "~/.vana/wallets/\r"
-expect "Enter wallet name (default):"
-send "default\r"
-expect "Enter network [vana/satori/moksha/local/test/archive] (vana):"
-send "moksha\r"
-expect eof
-EOF
+
