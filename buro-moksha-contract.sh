@@ -138,6 +138,13 @@ read -p "Enter DataLiquidityPoolToken Contract Address: " DLP_TOKEN_MOKSHA_CONTR
 # Save the Moksha-Contract to moksha-contract.txt
 MOKSHA_CONTRACT="/root/vana-Node/moksha-contract.txt"
 
+# Check if the file exists, if yes, delete it
+if [[ -f "$MOKSHA_CONTRACT" ]]; then
+    print_info "Existing moksha-contract.txt found. Deleting the old file..."
+    rm "$MOKSHA_CONTRACT"
+    print_info "Old moksha-contract.txt deleted."
+fi
+
 {
     echo "Owner Address: $OWNER_ADDRESS"                 
     echo "DLP Name: $DLP_NAME"
