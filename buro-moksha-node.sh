@@ -156,17 +156,10 @@ read -p "Press Enter to continue..."
 
 # Your ColdKey Wallet Balance check automation :
 print_info "Checking coldkey wallet balance..."
-expect << EOF
-spawn ./vanacli wallet balance
-expect "Enter wallets path (~/.vana/wallets/):"
-send "~/.vana/wallets/\r"
-expect "Enter wallet name (default):"
-send "default\r"
-expect "Enter network [vana/satori/moksha/local/test/archive] (vana):"
-send "moksha\r"
-expect eof
-EOF
+./vanacli wallet balance --wallet.path /root/.vana/wallets --wallet.name default --network moksha
+
 read -p "Press Enter to continue..."
+
 
 
 # Display the Moksha hotkey and coldkey wallet addresses
@@ -193,37 +186,6 @@ else
 fi
 
 
-# Now we will proceed to register as a Validator
-print_info "<=========================================>"
-
-print_info "Total 8 steps we will follow to complete this process"
-
-# Step 1
-print_info "Registering as a validator..."
-if ./vanacli dlp register_validator --stake_amount 10; then
-    print_info "Step 1 Completed!"
-else
-    print_error "This Step not completed: Registering as a validator failed!"
-fi
-
-# Step 2
-print_info "Approving validator..."
-if ./vanacli dlp approve_validator --validator_address=${HOTKEY_ADDRESS}; then
-    print_info "Step 2 Completed!"
-else
-    print_error "This Step not completed: Approving the validator failed!"
-fi
-
-# Step 3
-# Run Validator
-print_info "Setting up Vana validator service..."
-# Assuming the command to set up the validator service goes here
-if <command_to_setup_validator_service>; then
-    print_info "Step 3 Completed!"
-else
-    print_error "This Step not completed: Setting up the Vana validator service failed!"
-fi
-
 
 # Now we will proceed to register as a Validator
 print_info "<=========================================>"
@@ -246,16 +208,9 @@ else
     print_error "This Step 2 not completed: Approving the validator failed!"
 fi
 
-# Step 3
 print_info "Setting up Vana validator service..."
-# Assuming the command to set up the validator service goes here
-if <command_to_setup_validator_service>; then
-    print_info "Step 3 Completed!"
-else
-    print_error "This Step 3 not completed: Setting up the Vana validator service failed!"
-fi
 
-# Step 4
+# Step 3
 print_info "Finding path of Poetry..."
 POETRY_PATH=$(which poetry)
 
@@ -265,7 +220,7 @@ else
     print_error "This Step 4 not completed: Poetry path not found!"
 fi
 
-# Step 5
+# Step 4
 print_info "Creating systemd service..."
 cat > /etc/systemd/system/vana.service <<EOL
 [Unit]
@@ -288,7 +243,7 @@ EOL
 
 print_info "Step 5 Completed!"
 
-# Step 6
+# Step 5
 print_info "Starting Vana validator service..."
 if systemctl daemon-reload && systemctl enable vana.service && systemctl start vana.service; then
     print_info "Step 6 Completed!"
@@ -296,7 +251,7 @@ else
     print_error "This Step 6 not completed: Starting Vana validator service failed!"
 fi
 
-# Step 7
+# Step 6
 print_info "Checking service status..."
 if systemctl is-active --quiet vana.service; then
     print_info "Step 7 Completed!"
@@ -304,7 +259,7 @@ else
     print_error "This Step 7 not completed: Vana validator service is not running!"
 fi
 
-# Step 8
+# Step 7
 print_info "Displaying validator logs..."
 if journalctl -u vana.service -f; then
     print_info "Step 8 Completed!"
