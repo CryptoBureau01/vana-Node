@@ -53,10 +53,10 @@ Site : [Vana](https://www.vana.org/) | Docs : [Vana Docs](https://docs.oceanprot
 
    - This script automates the setup of essential dependencies and the Vana wallet creation or restoration process. It performs the following key actions:
 
-   **System Updates:**
+  - **System Updates :**
       - Updates and upgrades the system's package list and installed packages.
 
-   **Installations:**
+  - **Installations :**
       - Git: Installs Git and verifies the installation.
       - Python 3.11: Installs Python 3.11, necessary libraries, and sets it as the default Python version.
       - pip: Installs and upgrades Python's pip package manager.
@@ -65,26 +65,26 @@ Site : [Vana](https://www.vana.org/) | Docs : [Vana Docs](https://docs.oceanprot
       - Poetry: Installs the Poetry package manager for managing dependencies.
       - Node.js and npm: Installs Node.js and its package manager, npm, using the NodeSource setup script.
 
-   **Cloning Vana DLP Repository:**
+  - **Cloning Vana DLP Repository :**
       - Clones the Vana DLP project from GitHub and enters the project directory.
       - Creates an .env file based on the example template.
 
-   **Setting up Virtual Environment & Vana CLI:**
+  - **Setting up Virtual Environment & Vana CLI :**
       - Sets up a Python virtual environment.
       - Installs the Vana CLI and dependencies using Poetry.
 
-   **Wallet Creation/Restoration:**
+  - **Wallet Creation/Restoration :**
       - Allows users to either create a new Vana wallet or restore one using a mnemonic phrase.
       - Automates the creation of coldkey and hotkey private keys, and stores them securely.
       - Prompts the user to manually input their private keys and addresses.
       - Saves wallet-related private data (addresses, private keys, mnemonic phrases) in private-data.txt.
 
-   **Encryption Key Generation:**
+  - **Encryption Key Generation :**
       - Generates encryption keys using a separate keygen.sh script.
       - Copies generated encryption keys to the appropriate directories.
 
-   **Final Output:**
-      - Outputs the process completion message and provides details about the exported private keys and encryption keys." > private-data.txt
+  - **Final Output :**
+      - Outputs the process completion message and provides details about the exported private keys and encryption keys. > private-data.txt
 
 
 
@@ -97,30 +97,30 @@ Site : [Vana](https://www.vana.org/) | Docs : [Vana Docs](https://docs.oceanprot
 
 ## Note :
 
-   **System Updates and Prerequisites Installation:**
+  - **System Updates and Prerequisites Installation :**
       - Updates your system packages.
       - Installs essential prerequisites such as Git, curl, Python 3.11, and other necessary tools.
 
-   **Installing Required Tools:**
+  - **Installing Required Tools :**
       - Installs key development tools like Git, Python, Poetry, Node.js, npm, Yarn, and more to ensure the environment is properly set up.
 
-   **Setting up Moksha DLP Smart Contracts:**
+  - **Setting up Moksha DLP Smart Contracts :**
       - Clones the `vana-dlp-smart-contracts` repository from GitHub.
       - Installs all the required dependencies using Yarn.
       - Configures the `.env` file by filling in the provided contract details.
 
-   **Smart Contract Deployment:**
+  - **Smart Contract Deployment :**
       - Deploys the Data Liquidity Pool (DLP) and DLP token contracts using Hardhat on the Moksha Testnet.
 
-   **Saving Contract Addresses:**
+  - **Saving Contract Addresses :**
       - Prompts the user to enter the deployed contract addresses.
       - Saves the contract details, including the DLP and token contract addresses, in the `moksha-contract.txt` file for future reference.
 
-   **Display of Contract Information:**
+  - **Display of Contract Information :**
       - Displays all the entered and saved contract information during the deployment process, ensuring the user has a clear view of the deployed contract details.
 
 
-   **Important Links:**
+  - **Important Links :**
 
       - Faucet, Contract Verify with ChatGpt, Moksha Explorer importent Link .
          - Faucet : https://faucet.vana.org
@@ -137,45 +137,45 @@ Site : [Vana](https://www.vana.org/) | Docs : [Vana Docs](https://docs.oceanprot
   ```
 
  ## Note :
-      - This script is designed to automate the setup and deployment process for running a Vana validator. It handles everything from updating the system, installing necessary tools, setting up Python, Git, and Node.js environments, to deploying Moksha DLP smart contracts. Below is a step-by-step explanation of how the script works:
+     - This script is designed to automate the setup and deployment process for running a Vana validator. It handles everything from updating the system, installing necessary tools, setting up Python, Git, and Node.js environments, to deploying Moksha DLP smart contracts. Below is a step-by-step explanation of how the script works:
 
-   **Function Definitions:**
+  - **Function Definitions :**
       - `print_info`: Prints messages in green to provide informative updates to the user.
       - `print_error`: Prints messages in red to signal errors.
 
-   **Root Check:**
+  - **Root Check :**
       - The script ensures that it is run with root (administrator) privileges. If not, it exits.
 
-   **System Updates and Installation of Basic Tools:**
+  - **System Updates and Installation of Basic Tools :**
       - The script updates the system and installs `git`, `python3.11`, `pip`, `Poetry`, `Node.js`, and other essential development tools like `build-essential`.
 
-   **Installation and Version Checks:**
+  - **Installation and Version Checks :**
       - After installing Python, Git, Poetry, Node.js, and npm, the script checks and prints their installed versions to ensure everything was set up correctly.
 
-   **Prompt for OpenAI API Key:**
+  - **Prompt for OpenAI API Key :**
       - The user is asked to input their OpenAI API key, which is necessary for the setup.
 
-   **Reading Contract Addresses:**
+  - **Reading Contract Addresses :**
       - The script reads contract details (such as the DLP and DLP token contract addresses) from a file called `moksha-contract.txt`, which stores essential contract information.
 
-   **Display of Contract Information:**
+  - **Display of Contract Information :**
       - The extracted contract information is displayed for user confirmation.
 
-   **Environment Configuration:**
+  - **Environment Configuration :**
       - It sets up the `.env` file with the necessary contract details and OpenAI API key for the Vana validator.
 
-   **Wallet Funding:**
+  - **Wallet Funding :**
       - The user is prompted to fund their coldkey and hotkey wallets with DLP tokens. Afterward, the script checks the wallet balance.
  
-   **Validator Registration:**
+  - **Validator Registration :**
       - The script walks through registering and approving the validator, guiding the user step by step.
       - It automates the validator registration process by interacting with the `vanacli` commands.
 
-   **Systemd Service Setup:**
+  - **Systemd Service Setup :**
       - The script creates a `systemd` service for running the Vana validator, ensuring that it starts automatically on boot and continues running.
       - It checks the service status and prints logs in real-time.
 
-   **Final Output:**
+  - **Final Output :**
       - The script concludes by checking the validator logs to confirm the process has been completed successfully.
 
 
@@ -186,13 +186,7 @@ Site : [Vana](https://www.vana.org/) | Docs : [Vana Docs](https://docs.oceanprot
 
 
 
-## Troubleshooting
-
-If you encounter issues:
-- Ensure all prerequisites are correctly installed
-- Double-check your `.env` file contents in both repositories
-- Verify your wallet has sufficient VANA and DLP tokens in both coldkey and hotkey addresses
-- Check the validator logs for specific error messages
+# Troubleshooting
 
 For further assistance, please join our [Discord community](https://discord.com/invite/Wv2vtBazMR).
 
