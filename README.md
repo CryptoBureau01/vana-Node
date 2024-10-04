@@ -215,7 +215,7 @@ Site : [Vana](https://www.vana.org/) | Docs : [Vana Docs](https://docs.oceanprot
 
 # Troubleshooting
 
-For further assistance, please join our [Discord community](https://discord.com/invite/Wv2vtBazMR).
+For further assistance, please join Vana Discord [Discord community](https://discord.com/invite/Wv2vtBazMR).
 
 
 Join our Telegram Discussion [Telegram community](https://t.me/BuroGroupChat).
