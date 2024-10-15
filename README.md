@@ -22,7 +22,7 @@ Site : [Vana](https://www.vana.org/) | Docs : [Vana Docs](https://docs.oceanprot
 
 
 
-## Follow our TG : https://t.me/CryptoBuroOfficial
+## Follow our TG : https://t.me/CryptoBureau01
 
 
 # Setup
@@ -30,7 +30,7 @@ Site : [Vana](https://www.vana.org/) | Docs : [Vana Docs](https://docs.oceanprot
  ### Clone the repository
 
   ```bash
-   git clone https://github.com/CryptoBuroMaster/vana-Node.git && cd vana-Node
+   git clone https://github.com/CryptoBureau01/vana-Node.git && cd vana-Node
   ```
 
 
@@ -232,6 +232,6 @@ Site : [Vana](https://www.vana.org/) | Docs : [Vana Docs](https://docs.oceanprot
 For further assistance, please join Vana Discord [Discord community](https://discord.com/invite/Wv2vtBazMR).
 
 
-Join our Telegram Discussion [Telegram community](https://t.me/BuroGroupChat).
+Join our Telegram Discussion [Telegram community](https://t.me/CryptoBureauChat).
 
 
