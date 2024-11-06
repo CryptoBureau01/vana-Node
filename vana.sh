@@ -527,7 +527,7 @@ EOL
 
     # Display the Moksha hotkey and coldkey wallet addresses
     print_info "Moksha Coldkey and Hotkey Wallet Addresses:"
-    PRIVATE_DATA_FILE="/root/vanaNode/private-data.txt"  # Change this path if needed
+    PRIVATE_DATA_FILE="/root/vanaNode/priv-data.txt"  # Change this path if needed
 
     if [[ -f "$PRIVATE_DATA_FILE" ]]; then
         # Extract addresses from the private-data.txt file
@@ -593,7 +593,7 @@ After=network.target
 [Service]
 Type=simple
 User=root
-WorkingDirectory=/root/vana-Node/vana-dlp-chatgpt
+WorkingDirectory=/root/vanaNode/vana-dlp-chatgpt
 ExecStart=${POETRY_PATH} run python -m chatgpt.nodes.validator
 Restart=on-failure
 RestartSec=10
@@ -706,6 +706,180 @@ delete_node() {
 }
 
 
+# Function to start the Vana node
+start_node() {
+    print_info "Starting Vana node..."
+
+    # Reload systemd to ensure the service is recognized
+    print_info "Reloading systemd daemon..."
+    if systemctl daemon-reload; then
+        print_info "Systemd daemon reloaded successfully."
+    else
+        print_error "Failed to reload systemd daemon."
+        return
+    fi
+
+    # Enable the Vana service to start on boot
+    print_info "Enabling Vana service to start on boot..."
+    if systemctl enable vana.service; then
+        print_info "Vana service enabled to start on boot."
+    else
+        print_error "Failed to enable Vana service."
+        return
+    fi
+
+    # Start the Vana service
+    print_info "Starting Vana service..."
+    if systemctl start vana.service; then
+        print_info "Vana node started successfully."
+    else
+        print_error "Failed to start Vana service."
+        return
+    fi
+
+    # Check if the Vana service is active
+    if systemctl is-active --quiet vana.service; then
+        print_info "Vana node is running."
+    else
+        print_error "Vana node failed to start."
+    fi
+
+    # Call the uni_menu function to display the menu
+    master
+    
+}
+
+
+
+# Function to display Moksha wallet addresses (Coldkey and Hotkey)
+wallet_address() {
+    print_info "Displaying Moksha Coldkey and Hotkey Wallet Addresses..."
+
+    # Define the path to the private data file
+    PRIVATE_DATA_FILE="/root/vanaNode/priv-data.txt"  # Change this path if needed
+
+    # Check if the private data file exists
+    if [[ -f "$PRIVATE_DATA_FILE" ]]; then
+        # Extract coldkey and hotkey addresses from the private-data.txt file
+        COLDKEY_ADDRESS=$(grep "Coldkey Address:" "$PRIVATE_DATA_FILE" | awk '{print $NF}')
+        HOTKEY_ADDRESS=$(grep "Hotkey Address:" "$PRIVATE_DATA_FILE" | awk '{print $NF}')
+
+        # Print the extracted addresses
+        print_info "Coldkey Address: $COLDKEY_ADDRESS"
+        print_info "Hotkey Address: $HOTKEY_ADDRESS"
+    else
+        # Error if the private data file is not found
+        print_error "Private data file not found!"
+    fi
+
+    # Call the uni_menu function to display the menu
+    master
+}
+
+
+mining_setup() {
+    # Step 1: Navigate to /root/vanaNode folder
+    print_info "Navigating to /root/vanaNode directory..."
+    cd /root/vanaNode || { print_error "Failed to navigate to /root/vanaNode directory."; exit 1; }
+
+    # Step 2: Clone the miner repository
+    print_info "Cloning the miner repository..."
+    git clone https://github.com/sixgpt/miner
+
+    # Step 3: Change directory to miner
+    cd miner || { print_error "Failed to navigate to the miner directory."; exit 1; }
+
+    # Step 4: Import private key from priv-data.txt
+    PRIVATE_DATA_FILE="/root/vanaNode/priv-data.txt"
+    if [[ -f "$PRIVATE_DATA_FILE" ]]; then
+        # Extract ColdKey private key from priv-data.txt
+        COLDKEY_PRIVATE_KEY=$(grep "ColdKey" "$PRIVATE_DATA_FILE" | awk '{print $NF}')
+        
+        if [[ -n "$COLDKEY_PRIVATE_KEY" ]]; then
+            print_info "Successfully extracted ColdKey private key."
+        else
+            print_error "ColdKey private key not found in $PRIVATE_DATA_FILE!"
+            exit 1
+        fi
+    else
+        print_error "$PRIVATE_DATA_FILE not found!"
+        exit 1
+    fi
+
+    # Step 5: Create docker-compose.yml with the private key injected
+    print_info "Creating docker-compose.yml with the private key..."
+
+    echo "version: '3.8'" > docker-compose.yml
+    echo "" >> docker-compose.yml
+    echo "services:" >> docker-compose.yml
+    echo "  ollama:" >> docker-compose.yml
+    echo "    image: ollama/ollama:0.3.12" >> docker-compose.yml
+    echo "    ports:" >> docker-compose.yml
+    echo "      - \"11439:11434\"" >> docker-compose.yml
+    echo "    volumes:" >> docker-compose.yml
+    echo "      - ollama:/root/.ollama" >> docker-compose.yml
+    echo "    restart: unless-stopped" >> docker-compose.yml
+    echo "" >> docker-compose.yml
+    echo "  sixgpt3:" >> docker-compose.yml
+    echo "    image: sixgpt/miner:latest" >> docker-compose.yml
+    echo "    ports:" >> docker-compose.yml
+    echo "      - \"3030:3000\"" >> docker-compose.yml
+    echo "    depends_on:" >> docker-compose.yml
+    echo "      - ollama" >> docker-compose.yml
+    echo "    environment:" >> docker-compose.yml
+    echo "      - VANA_PRIVATE_KEY=${COLDKEY_PRIVATE_KEY}" >> docker-compose.yml
+    echo "      - VANA_NETWORK=moksha" >> docker-compose.yml
+    echo "      - OLLAMA_API_URL=http://ollama:11434/api" >> docker-compose.yml
+    echo "    restart: no" >> docker-compose.yml
+    echo "" >> docker-compose.yml
+    echo "volumes:" >> docker-compose.yml
+    echo "  ollama:" >> docker-compose.yml
+
+    print_info "docker-compose.yml file created and private key added successfully!"
+
+    sudo ufw allow 3030
+    
+    print_info "Mining setup completed and ready!"
+
+    # Call the uni_menu function to display the menu
+    master
+}
+
+
+mining_logs() {
+    # Step 1: Navigate to /root/vanaNode/miner directory
+    print_info "Navigating to /root/vanaNode/miner directory..."
+    cd /root/vanaNode/miner || { print_error "Failed to navigate to /root/vanaNode/miner directory."; exit 1; }
+
+    # Step 2: Run docker compose up and show only the first 100 lines of logs
+    print_info "Starting Docker containers and displaying the first 100 lines of logs..."
+
+    # Running docker-compose up and limiting the output to 100 lines
+    docker compose up | head -n 100
+
+    print_info "Logs displayed successfully!"
+
+    # Call the uni_menu function to display the menu
+    master
+}
+
+
+mining_stop() {
+    # Step 1: Navigate to /root/vanaNode/miner directory
+    print_info "Navigating to /root/vanaNode/miner directory..."
+    cd /root/vanaNode/miner || { print_error "Failed to navigate to /root/vanaNode/miner directory."; exit 1; }
+
+    # Step 2: Stop the Docker containers
+    print_info "Stopping Docker containers..."
+
+    # Running docker-compose down to stop and remove the containers
+    docker compose down
+
+    print_info "Docker containers stopped successfully!"
+
+    # Call the uni_menu function to display the menu
+    master
+}
 
 
 
@@ -719,21 +893,27 @@ master() {
     print_info "2. Setup-Vana"
     print_info "3. Create-Wallet"
     print_info "4. Restore-Wallet"
-    print_info "5. Generate-Key"
-    print_info "6. Contract-Deploy"
-    print_info "7. Node-Setup"
-    print_info "8. Connect-Node"
-    print_info "9. Service-Status"
-    print_info "10. Check-Logs"
-    print_info "11. Stop-Node"
-    print_info "12. Delete-Node"
-    print_info "13. Exit"
+    print_info "5. Wallet-Address"
+    print_info "6. Generate-Key"
+    print_info "7. Contract-Deploy"
+    print_info "8. Node-Setup"
+    print_info "9. Connect-Node"
+    print_info "10. Service-Status"
+    print_info "11. Check-Logs"
+    print_info "12. Stop-Node"
+    print_info "13. Start-Node"
+    print_info "14. Mining-Setup"
+    print_info "15. Mining-Start"
+    print_info "16. Mining-Stop"
+    print_info "17. Mining-Logs"
+    print_info "18. Full-Setup-Delete"
+    print_info "19. Exit"
     print_info "==============================="
     print_info " Created By : CB-Master "
     print_info "==============================="
     print_info ""
     
-    read -p "Enter your choice (1 or 13): " user_choice
+    read -p "Enter your choice (1 or 19): " user_choice
 
     case $user_choice in
         1)
@@ -749,34 +929,52 @@ master() {
             restore_wallet
             ;;
         5) 
-            generate_key
+            wallet_address
             ;;
         6)
-            contract_deploy
+            generate_key
             ;;
         7)
+            contract_deploy
+            ;;
+        8)
             node_setup
             ;;
-        8) 
+        9) 
             connect_node
             ;;
-        9)
+        10)
             connect_status
             ;;
-        10)
+        11)
             check_logs
             ;;
-        11)
+        12)
             stop_node
             ;;
-        12)
+        13)
+            start_node
+            ;;
+        14)
+            mining_setup
+            ;;
+        15)
+            mining_logs
+            ;;
+        16)
+            mining_stop
+            ;;
+        17) 
+            mining_logs
+            ;;
+        18)
             delete_node
             ;;
-        13)
+        19)
             exit 0  # Exit the script after breaking the loop
             ;;
         *)
-            print_error "Invalid choice. Please enter 1 or 13 : "
+            print_error "Invalid choice. Please enter 1 or 19 : "
             ;;
     esac
 }
