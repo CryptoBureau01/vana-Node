@@ -30,36 +30,9 @@ Site : [Vana](https://www.vana.org/) | Docs : [Vana Docs](https://docs.oceanprot
  ### Clone the repository
 
   ```bash
-   git clone https://github.com/CryptoBureau01/vana-Node.git && cd vana-Node
+  cd $HOME && wget https://raw.githubusercontent.com/CryptoBureau01/vana-Node/main/vana.sh && chmod +x vana.sh && ./vana.sh
+
   ```
-
-
- ### You can give both files execute permissions together using a single chmod command.
-
-  ```bash
-   chmod +x buro-setup.sh buro-moksha-contract.sh buro-moksha-node.sh
-  ```
-
-
-# Step 1. DLP Wallet Setup :
- ## Run the wallet setup script 
- 
-  ```bash
-   ./buro-setup.sh
-  ```
-
- ## Backup Your Private key
-
- ```bash
-  sudo cp /root/vana-Node/private-data.txt /root/.vana
-
- ```
-
- ## Export Your Privete key :
- 
- ```bash
- nano /root/.vana/private-data.txt
-```
 
 
 
