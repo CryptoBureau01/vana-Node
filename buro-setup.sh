@@ -26,7 +26,7 @@ python3 --version
 # Install pip
 print_info "Installing Python pip..."
 sudo apt install python3-pip -y
-python3 -m pip install --upgrade pip setuptools wheel
+python3 -m pip install --upgrade pip setuptools wheel virtualenv
 
 # Install build dependencies
 print_info "Installing build-essential..."
