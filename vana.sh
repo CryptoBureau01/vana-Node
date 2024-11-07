@@ -813,20 +813,10 @@ mining_setup() {
     # Step 3: Change directory to miner
     cd miner || { print_error "Failed to navigate to the miner directory."; exit 1; }
 
-    # Step 4: Import private key from priv-data.txt
-    PRIVATE_DATA_FILE="/root/vanaNode/priv-data.txt"
-    if [[ -f "$PRIVATE_DATA_FILE" ]]; then
-        # Extract ColdKey private key from priv-data.txt
-        COLDKEY_PRIVATE_KEY=$(grep "ColdKey" "$PRIVATE_DATA_FILE" | awk '{print $NF}')
-        
-        if [[ -n "$COLDKEY_PRIVATE_KEY" ]]; then
-            print_info "Successfully extracted ColdKey private key."
-        else
-            print_error "ColdKey private key not found in $PRIVATE_DATA_FILE!"
-            exit 1
-        fi
-    else
-        print_error "$PRIVATE_DATA_FILE not found!"
+    # Step 4: Prompt the user for the private key (with 0x prefix)
+    read -p "Please enter your private key (with 0x prefix): " COLDKEY_PRIVATE_KEY
+    if [[ -z "$COLDKEY_PRIVATE_KEY" ]]; then
+        print_error "Private key cannot be empty!"
         exit 1
     fi
 
@@ -862,12 +852,13 @@ mining_setup() {
     print_info "docker-compose.yml file created and private key added successfully!"
 
     sudo ufw allow 3030
-    
+
     print_info "Mining setup completed and ready!"
 
     # Call the uni_menu function to display the menu
     master
 }
+
 
 
 mining_logs() {
