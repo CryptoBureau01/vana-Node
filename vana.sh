@@ -134,15 +134,20 @@ setup_vana() {
     echo "Creating .env file..."
     cp .env.example .env
 
+    python3.12 -m pip install --upgrade pip
+    python3.12 -m pip install virtualenv
+    sudo apt install python3.12-dev
+    sudo apt install python3.12-distutils
+    sudo apt install build-essential
+    pip install -r requirements.txt
+    
     # Install dependencies with Poetry
     echo "Installing dependencies..."
     poetry install
 
     # Set up virtual environment and install 'vana' package
     echo "Setting up virtual environment..."
-    python3.12 -m pip install --upgrade pip
-    python3.12 -m pip install virtualenv
-    sudo apt install python3.12-distutils
+    
     python3.12 -m virtualenv venv
     source venv/bin/activate
     pip install vana
