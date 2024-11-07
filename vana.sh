@@ -57,11 +57,11 @@ install_dependency() {
     print_info "Updating and upgrading system packages, and installing curl..."
     sudo apt update && sudo apt upgrade -y && sudo apt install expect curl git wget build-essential -y
 
-    # Download and execute the Python 3.12 installation script
-    if curl -s https://raw.githubusercontent.com/CryptoBureau01/packages/main/python3.12.sh | bash; then
-        echo "Pyhton 3.12 installation script executed successfully."
-        sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 1
-        sudo update-alternatives --set python3 /usr/bin/python3.12
+    # Download and execute the Python 3.11 installation script
+    if curl -s https://raw.githubusercontent.com/CryptoBureau01/packages/main/python3.11.sh | bash; then
+        echo "Pyhton 3.11 installation script executed successfully."
+        sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 1
+        sudo update-alternatives --set python3 /usr/bin/python3.11
     else
         echo "Error: Failed to run the Rust installation script. Please check the link or your network connection."
         exit 1
@@ -134,10 +134,10 @@ setup_vana() {
     echo "Creating .env file..."
     cp .env.example .env
 
-    python3.12 -m pip install --upgrade pip
-    python3.12 -m pip install virtualenv
-    sudo apt install python3.12-dev
-    sudo apt install python3.12-distutils
+    python3.11 -m pip install --upgrade pip
+    python3.11 -m pip install virtualenv
+    sudo apt install python3.11-dev
+    sudo apt install python3.11-distutils
     sudo apt install build-essential
     pip install -r requirements.txt
     
@@ -148,7 +148,7 @@ setup_vana() {
     # Set up virtual environment and install 'vana' package
     echo "Setting up virtual environment..."
     
-    python3.12 -m virtualenv venv
+    python3.11 -m virtualenv venv
     source venv/bin/activate
     pip install vana
 
