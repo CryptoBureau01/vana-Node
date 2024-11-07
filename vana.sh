@@ -57,9 +57,9 @@ install_dependency() {
     print_info "Updating and upgrading system packages, and installing curl..."
     sudo apt update && sudo apt upgrade -y && sudo apt install expect curl git wget build-essential -y
 
-    # Download and execute the Python 3.10 installation script
-    if curl -s https://raw.githubusercontent.com/CryptoBureau01/packages/main/python3.10.sh | bash; then
-        echo "Pyhton 3.10 installation script executed successfully."
+    # Download and execute the Python 3.12 installation script
+    if curl -s https://raw.githubusercontent.com/CryptoBureau01/packages/main/python3.12.sh | bash; then
+        echo "Pyhton 3.12 installation script executed successfully."
     else
         echo "Error: Failed to run the Rust installation script. Please check the link or your network connection."
         exit 1
