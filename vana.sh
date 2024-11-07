@@ -140,7 +140,10 @@ setup_vana() {
 
     # Set up virtual environment and install 'vana' package
     echo "Setting up virtual environment..."
-    virtualenv venv
+    python3.12 -m pip install --upgrade pip
+    python3.12 -m pip install virtualenv
+    sudo apt install python3.12-distutils
+    python3.12 -m virtualenv venv
     source venv/bin/activate
     pip install vana
 
