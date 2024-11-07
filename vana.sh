@@ -60,6 +60,8 @@ install_dependency() {
     # Download and execute the Python 3.12 installation script
     if curl -s https://raw.githubusercontent.com/CryptoBureau01/packages/main/python3.12.sh | bash; then
         echo "Pyhton 3.12 installation script executed successfully."
+        sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 1
+        sudo update-alternatives --set python3 /usr/bin/python3.12
     else
         echo "Error: Failed to run the Rust installation script. Please check the link or your network connection."
         exit 1
