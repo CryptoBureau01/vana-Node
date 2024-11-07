@@ -139,7 +139,6 @@ setup_vana() {
     sudo apt install python3.11-dev
     sudo apt install python3.11-distutils
     sudo apt install build-essential
-    pip install -r requirements.txt
     
     # Install dependencies with Poetry
     echo "Installing dependencies..."
