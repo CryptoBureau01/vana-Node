@@ -563,6 +563,21 @@ EOL
 
 
 connect_node() {
+
+    # Display the Moksha hotkey and coldkey wallet addresses
+    print_info "Moksha Coldkey and Hotkey Wallet Addresses:"
+    PRIVATE_DATA_FILE="/root/vanaNode/priv-data.txt"  # Change this path if needed
+
+        # Extract addresses from the private-data.txt file
+        COLDKEY_ADDRESS=$(grep "Coldkey Address:" "$PRIVATE_DATA_FILE" | awk '{print $NF}')
+        HOTKEY_ADDRESS=$(grep "Hotkey Address:" "$PRIVATE_DATA_FILE" | awk '{print $NF}')
+
+        # Print the addresses
+        print_info "Coldkey Address: $COLDKEY_ADDRESS"
+        print_info "Hotkey Address: $HOTKEY_ADDRESS"
+
+    cd /root/vanaNode/vana-dlp-chatgpt
+    
     # Step 1: Register as a validator
     print_info "Registering as a validator..."
     if ./vanacli dlp register_validator --stake_amount 10; then
