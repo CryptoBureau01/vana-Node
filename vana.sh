@@ -870,7 +870,7 @@ mining_logs() {
     print_info "Starting Docker containers and displaying the first 100 lines of logs..."
 
     # Running docker-compose up and limiting the output to 100 lines
-    docker compose up | head -n 100
+    docker compose up
 
     print_info "Logs displayed successfully!"
 
