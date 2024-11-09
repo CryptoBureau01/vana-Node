@@ -264,20 +264,24 @@ restore_wallet() {
     echo "Restoring coldkey and hotkey wallets using mnemonic phrases."
     echo ""
 
-    # Step 1: Restore coldkey wallet
+    # Step 1: Coldkey wallet restore karna
     echo ""
     read -p "Enter your Coldkey Mnemonic Phrase: " COLDKEY_MNEMONIC
     sleep 1  # Add a short delay to ensure smooth input handling
 
-    # Attempt to regenerate the wallet using the provided mnemonic
-    ./vanacli wallet regen_coldkey --mnemonic "$COLDKEY_MNEMONIC" --wallet.path "/root/.vana/wallets" --wallet.name "default"
+    # Mnemonic ko clean karne ke liye xargs ka use kar rahe hain
+    COLDKEY_MNEMONIC=$(echo "$COLDKEY_MNEMONIC" | xargs)
 
-    # Print a message to check if the command succeeded
+    # CLI command run kar rahe hain bina extra quotes ke
+    eval ./vanacli wallet regen_coldkey --mnemonic "$COLDKEY_MNEMONIC" --wallet.path /root/.vana/wallets --wallet.name default
+
+    # Check karte hain agar wallet restore sahi se ho gaya
     if [ $? -eq 0 ]; then
-        echo "ColdKey Wallet restored successfully."
+        echo "Wallet successfully restore ho gaya."
     else
-        echo "There was an error restoring the wallet. Please check your mnemonic phrase."
+        echo "Wallet restore karte waqt error aayi hai. Kripya apna mnemonic phrase check karein."
     fi
+
 
 
     # Step 1: Restore coldkey wallet
@@ -285,8 +289,12 @@ restore_wallet() {
     read -p "Enter your Hotkey Mnemonic Phrase: " HOTKEY_MNEMONIC
     sleep 1  # Add a short delay to ensure smooth input handling
 
+    # Mnemonic ko clean karne ke liye xargs ka use kar rahe hain
+    C
+    HOTKEY_MNEMONIC=$(echo "$HOTKEY_MNEMONIC" | xargs)
+    
     # Attempt to regenerate the wallet using the provided mnemonic
-    ./vanacli wallet regen_hotkey --mnemonic "$HOTKEY_MNEMONIC" --wallet.path "/root/.vana/wallets" --wallet.name "default"
+    eval ./vanacli wallet regen_hotkey --mnemonic "$HOTKEY_MNEMONIC" --wallet.path /root/.vana/wallets --wallet.name default
 
     # Print a message to check if the command succeeded
     if [ $? -eq 0 ]; then
