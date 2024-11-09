@@ -82,6 +82,7 @@ install_dependency() {
 
     # Install Poetry
     echo "Installing Poetry..."
+    sleep 1  # Add a short delay to ensure smooth input handling
     curl -sSL https://install.python-poetry.org | python3 -
 
     # Add Poetry to PATH by updating .bashrc
@@ -92,10 +93,12 @@ install_dependency() {
     poetry --version
 
     # Install web3 globally using pip3
+    sleep 1  # Add a short delay to ensure smooth input handling
     pip3 install web3
     
     # Install pip3 for Python 3.10
     sudo apt install -y python3-pip
+    sleep 1  # Add a short delay to ensure smooth input handling
     python3 -m pip install --upgrade pip setuptools wheel virtualenv
     
     print_info "Checking Python3 version..."
@@ -132,6 +135,7 @@ setup_vana() {
 
     # Create .env file
     echo "Creating .env file..."
+    sleep 1  # Add a short delay to ensure smooth input handling
     cp .env.example .env
 
     python3.11 -m pip install --upgrade pip
@@ -142,10 +146,13 @@ setup_vana() {
     
     # Install dependencies with Poetry
     echo "Installing dependencies..."
+    sleep 1  # Add a short delay to ensure smooth input handling
     poetry install
 
     # Set up virtual environment and install 'vana' package
     echo "Setting up virtual environment..."
+
+    sleep 1  # Add a short delay to ensure smooth input handling
     
     python3.11 -m virtualenv venv
     source venv/bin/activate
@@ -168,6 +175,7 @@ create_wallet() {
     vanacli wallet create --wallet.name default --wallet.hotkey default
 
     # Step 2: Creating new Coldkey wallet private key
+    sleep 1  # Add a short delay to ensure smooth input handling
     echo "Step 2. Creating new Coldkey wallet private key..."
     echo "Enter wallet name (default): Press Enter"
     echo "Enter key type [coldkey/hotkey] (coldkey): Type coldkey"
@@ -175,6 +183,7 @@ create_wallet() {
     vanacli wallet export_private_key
 
     # Step 3: Creating new Hotkey wallet private key
+    sleep 1  # Add a short delay to ensure smooth input handling
     echo "Step 3. Creating new Hotkey wallet private key..."
     echo "Enter wallet name (default): Press Enter"
     echo "Enter key type [coldkey/hotkey] (coldkey): Type hotkey"
@@ -186,6 +195,7 @@ create_wallet() {
     echo "Now, please verify your private key and address information."
 
     # Prompt for mnemonic words
+    sleep 1  # Add a short delay to ensure smooth input handling
     echo "Enter your ColdKey mnemonic phrase:"
     read -p "Coldkey Mnemonic Phrase: " COLDKEY_MNEMONIC
     echo ""
@@ -193,12 +203,14 @@ create_wallet() {
     read -p "Hotkey Mnemonic Phrase: " HOTKEY_MNEMONIC
 
     # Prompt for private keys
+    sleep 1  # Add a short delay to ensure smooth input handling
     echo "Please enter your private keys manually:"
     read -p "Enter Coldkey Private Key: " COLDKEY_PRIVATE_KEY
     echo ""
     read -p "Enter Hotkey Private Key: " HOTKEY_PRIVATE_KEY
 
     # Prompt for wallet addresses
+    sleep 1  # Add a short delay to ensure smooth input handling
     echo ""
     echo "Please import both private keys into MetaMask and copy both your addresses."
     echo "Enter your wallet addresses manually:"
@@ -207,6 +219,7 @@ create_wallet() {
     read -p "Enter Hotkey Address: " HOTKEY_ADDRESS
 
     # Step 5: Display entered private keys and addresses
+    sleep 1  # Add a short delay to ensure smooth input handling
     echo ""
     echo "You have entered the following private keys and wallet addresses:"
     echo "Coldkey Private Key: $COLDKEY_PRIVATE_KEY"
@@ -217,6 +230,7 @@ create_wallet() {
     # Step 6: Save private data to file
     PRIVATE_DATA_FILE="/root/vanaNode/priv-data.txt"
 
+    sleep 1  # Add a short delay to ensure smooth input handling
     # Check if the file exists, if yes, delete it
     if [[ -f "$PRIVATE_DATA_FILE" ]]; then
        echo "Existing private-data.txt found. Deleting the old file..."
