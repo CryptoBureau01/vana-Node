@@ -391,6 +391,7 @@ contract_deploy() {
     read -p "Enter DLP Token Name: " DLP_TOKEN_NAME
     read -p "Enter DLP Token Symbol: " DLP_TOKEN_SYMBOL
 
+    sleep 1  # Add a short delay to ensure smooth input handling
     # Copy .env.example to .env and configure it
     print_info "Configuring .env file for smart contracts..."
     cp .env.example .env
@@ -400,14 +401,17 @@ contract_deploy() {
     sed -i "s|^DLP_TOKEN_NAME=.*|DLP_TOKEN_NAME=\"${DLP_TOKEN_NAME}\"|" .env
     sed -i "s|^DLP_TOKEN_SYMBOL=.*|DLP_TOKEN_SYMBOL=\"${DLP_TOKEN_SYMBOL}\"|" .env
 
+    sleep 1  # Add a short delay to ensure smooth input handling
     # Install dependencies
     print_info "Installing smart contract dependencies..."
     yarn install
 
+    sleep 1  # Add a short delay to ensure smooth input handling
     # Deploy the smart contracts to Moksha Testnet
     print_info "Deploying smart contracts to Moksha Testnet..."
     npx hardhat deploy --network moksha --tags DLPDeploy
 
+    sleep 1  # Add a short delay to ensure smooth input handling
     # Prompt for deployed contract addresses
     print_info "Please provide the deployed contract addresses."
     read -p "Enter DataLiquidityPool Contract Address: " DLP_MOKSHA_CONTRACT
@@ -416,6 +420,7 @@ contract_deploy() {
     # Save the Moksha-Contract to moksha-contract.txt
     MOKSHA_CONTRACT="/root/vanaNode/moksha-contract.txt" 
 
+    sleep 1  # Add a short delay to ensure smooth input handling
     # Check if the file exists, if yes, delete it
     if [[ -f "$MOKSHA_CONTRACT" ]]; then
         print_info "Existing moksha-contract.txt found. Deleting the old file..."
@@ -448,6 +453,7 @@ contract_deploy() {
 
     print_info "Moksha contract addresses and details have been saved to $MOKSHA_CONTRACT."
 
+    sleep 1  # Add a short delay to ensure smooth input handling
     # Validate if the input is empty
     if [ -z "$DLP_MOKSHA_CONTRACT" ] || [ -z "$DLP_TOKEN_MOKSHA_CONTRACT" ]; then
     print_error "Error: Both contract addresses must be provided."
@@ -483,6 +489,7 @@ node_setup() {
     print_info "Enter your OpenAI API Key (get it from https://platform.openai.com/account/api-keys):"
     read -p "OpenAI API Key: " OPENAI_API_KEY
 
+    sleep 1  # Add a short delay to ensure smooth input handling
     # Read contract addresses and details from the file
     MOKSHA_CONTRACT="/root/vanaNode/moksha-contract.txt"
     if [[ ! -f "$MOKSHA_CONTRACT" ]]; then
@@ -498,6 +505,7 @@ node_setup() {
     DLP_MOKSHA_CONTRACT=$(grep "DataLiquidityPool Contract Address:" "$MOKSHA_CONTRACT" | awk '{print $NF}')
     DLP_TOKEN_MOKSHA_CONTRACT=$(grep "DataLiquidityPoolToken Contract Address:" "$MOKSHA_CONTRACT" | awk '{print $NF}')
 
+    sleep 1  # Add a short delay to ensure smooth input handling
     # Display contract details
     print_info "Contract Owner Address: $OWNER_ADDRESS"
     print_info ""
@@ -512,10 +520,12 @@ node_setup() {
     print_info ""
     read -p "If everything is correct, press Enter to continue or Ctrl+C to abort."
 
+    sleep 1  # Add a short delay to ensure smooth input handling
     # Update .env file in vana-dlp-chatgpt
     print_info "Configuring .env file for vana-dlp-chatgpt..."
     cd /root/vanaNode/vana-dlp-chatgpt
 
+    sleep 1  # Add a short delay to ensure smooth input handling
     PUBLIC_KEY_BASE64=$(cat public_key_base64.asc)
 
     cat > .env <<EOL
@@ -536,12 +546,14 @@ PRIVATE_FILE_ENCRYPTION_PUBLIC_KEY_BASE64="${PUBLIC_KEY_BASE64}"
 EOL
 
     # Fund Validator with DLP Tokens
+    sleep 1  # Add a short delay to ensure smooth input handling
     print_info "Please import the DLP token to MetaMask using the DataLiquidityPoolToken address: ${DLP_TOKEN_MOKSHA_CONTRACT}"
     print_info "Send 10 of your DLP tokens to your coldkey and hotkey addresses."
     print_info "Press Enter after you have funded your wallets with DLP tokens..."
     read -p "Press Enter to continue..."
 
     # Your ColdKey Wallet Balance check automation :
+    sleep 1  # Add a short delay to ensure smooth input handling
     print_info "Checking coldkey wallet balance..."
     ./vanacli wallet balance --wallet.path /root/.vana/wallets --wallet.name default --network moksha
 
@@ -549,6 +561,7 @@ EOL
 
     # Display the Moksha hotkey and coldkey wallet addresses
     print_info "Moksha Coldkey and Hotkey Wallet Addresses:"
+    sleep 1  # Add a short delay to ensure smooth input handling
     PRIVATE_DATA_FILE="/root/vanaNode/priv-data.txt"  # Change this path if needed
 
     if [[ -f "$PRIVATE_DATA_FILE" ]]; then
@@ -579,6 +592,7 @@ connect_node() {
 
     # Display the Moksha hotkey and coldkey wallet addresses
     print_info "Moksha Coldkey and Hotkey Wallet Addresses:"
+    sleep 1  # Add a short delay to ensure smooth input handling
     PRIVATE_DATA_FILE="/root/vanaNode/priv-data.txt"  # Change this path if needed
 
         # Extract addresses from the private-data.txt file
@@ -589,10 +603,12 @@ connect_node() {
         print_info "Coldkey Address: $COLDKEY_ADDRESS"
         print_info "Hotkey Address: $HOTKEY_ADDRESS"
 
+    sleep 1  # Add a short delay to ensure smooth input handling
     cd /root/vanaNode/vana-dlp-chatgpt
     
     # Step 1: Register as a validator
     print_info "Registering as a validator..."
+    sleep 1  # Add a short delay to ensure smooth input handling
     if ./vanacli dlp register_validator --stake_amount 10; then
         print_info "Step 1 Completed!"
     else
@@ -602,6 +618,7 @@ connect_node() {
 
     # Step 2: Approve validator
     print_info "Approving validator..."
+    sleep 1  # Add a short delay to ensure smooth input handling
     if ./vanacli dlp approve_validator --validator_address=${HOTKEY_ADDRESS}; then
         print_info "Step 2 Completed!"
     else
@@ -611,6 +628,7 @@ connect_node() {
 
     # Step 3: Find Poetry Path
     print_info "Finding path of Poetry..."
+    sleep 1  # Add a short delay to ensure smooth input handling
     POETRY_PATH=$(which poetry)
 
     if [[ -n "$POETRY_PATH" ]]; then
@@ -622,6 +640,7 @@ connect_node() {
 
     # Step 4: Create systemd service
     print_info "Creating systemd service..."
+    sleep 1  # Add a short delay to ensure smooth input handling
     cat > /etc/systemd/system/vana.service <<EOL
 [Unit]
 Description=Vana Validator Service
@@ -645,6 +664,7 @@ EOL
 
     # Step 5: Start Vana validator service
     print_info "Starting Vana validator service..."
+    sleep 1  # Add a short delay to ensure smooth input handling
     if systemctl daemon-reload && systemctl enable vana.service && systemctl start vana.service; then
         print_info "Step 5 Completed!"
     else
@@ -665,6 +685,7 @@ connect_status() {
     print_info "Checking status of Vana validator service..."
 
     # Check if the service is active
+    sleep 1  # Add a short delay to ensure smooth input handling
     if systemctl is-active --quiet vana.service; then
         print_info "Vana validator service is running."
     else
@@ -682,7 +703,6 @@ check_logs() {
 
     # Display the last 100 lines of logs
     journalctl -u vana.service -n 100 -f
-
 
     # Call the uni_menu function to display the menu
     master
@@ -721,6 +741,7 @@ delete_node() {
 
         # Deleting the systemd service
         print_info "Deleting /etc/systemd/system/vana.service..."
+        sleep 1  # Add a short delay to ensure smooth input handling
         rm -rf /etc/systemd/system/vana.service
         print_info "/etc/systemd/system/vana.service has been deleted."
 
@@ -749,6 +770,7 @@ start_node() {
 
     # Reload systemd to ensure the service is recognized
     print_info "Reloading systemd daemon..."
+    sleep 1  # Add a short delay to ensure smooth input handling
     if systemctl daemon-reload; then
         print_info "Systemd daemon reloaded successfully."
     else
@@ -758,6 +780,7 @@ start_node() {
 
     # Enable the Vana service to start on boot
     print_info "Enabling Vana service to start on boot..."
+    sleep 1  # Add a short delay to ensure smooth input handling
     if systemctl enable vana.service; then
         print_info "Vana service enabled to start on boot."
     else
@@ -767,6 +790,7 @@ start_node() {
 
     # Start the Vana service
     print_info "Starting Vana service..."
+    sleep 1  # Add a short delay to ensure smooth input handling
     if systemctl start vana.service; then
         print_info "Vana node started successfully."
     else
@@ -775,6 +799,7 @@ start_node() {
     fi
 
     # Check if the Vana service is active
+    sleep 1  # Add a short delay to ensure smooth input handling
     if systemctl is-active --quiet vana.service; then
         print_info "Vana node is running."
     else
@@ -793,9 +818,11 @@ wallet_address() {
     print_info "Displaying Moksha Coldkey and Hotkey Wallet Addresses..."
 
     # Define the path to the private data file
+    sleep 1  # Add a short delay to ensure smooth input handling
     PRIVATE_DATA_FILE="/root/vanaNode/priv-data.txt"  # Change this path if needed
 
     # Check if the private data file exists
+    sleep 1  # Add a short delay to ensure smooth input handling
     if [[ -f "$PRIVATE_DATA_FILE" ]]; then
         # Extract coldkey and hotkey addresses from the private-data.txt file
         COLDKEY_ADDRESS=$(grep "Coldkey Address:" "$PRIVATE_DATA_FILE" | awk '{print $NF}')
@@ -817,6 +844,7 @@ wallet_address() {
 mining_setup() {
     # Step 1: Navigate to /root/vanaNode folder
     print_info "Navigating to /root/vanaNode directory..."
+    sleep 1  # Add a short delay to ensure smooth input handling
     cd /root/vanaNode || { print_error "Failed to navigate to /root/vanaNode directory."; exit 1; }
 
     # Step 2: Clone the miner repository
@@ -827,6 +855,7 @@ mining_setup() {
     cd miner || { print_error "Failed to navigate to the miner directory."; exit 1; }
 
     # Step 4: Prompt the user for the private key (with 0x prefix)
+    sleep 1  # Add a short delay to ensure smooth input handling
     read -p "Please enter your private key (with 0x prefix): " COLDKEY_PRIVATE_KEY
     if [[ -z "$COLDKEY_PRIVATE_KEY" ]]; then
         print_error "Private key cannot be empty!"
@@ -835,7 +864,7 @@ mining_setup() {
 
     # Step 5: Create docker-compose.yml with the private key injected
     print_info "Creating docker-compose.yml with the private key..."
-
+    sleep 1  # Add a short delay to ensure smooth input handling
     echo "version: '3.8'" > docker-compose.yml
     echo "" >> docker-compose.yml
     echo "services:" >> docker-compose.yml
@@ -862,6 +891,7 @@ mining_setup() {
     echo "volumes:" >> docker-compose.yml
     echo "  ollama:" >> docker-compose.yml
 
+    sleep 1  # Add a short delay to ensure smooth input handling
     print_info "docker-compose.yml file created and private key added successfully!"
 
     sudo ufw allow 3030
@@ -877,6 +907,7 @@ mining_setup() {
 mining_logs() {
     # Step 1: Navigate to /root/vanaNode/miner directory
     print_info "Navigating to /root/vanaNode/miner directory..."
+    sleep 1  # Add a short delay to ensure smooth input handling
     cd /root/vanaNode/miner || { print_error "Failed to navigate to /root/vanaNode/miner directory."; exit 1; }
 
     # Step 2: Run docker compose up and show only the first 100 lines of logs
@@ -895,6 +926,7 @@ mining_logs() {
 mining_stop() {
     # Step 1: Navigate to /root/vanaNode/miner directory
     print_info "Navigating to /root/vanaNode/miner directory..."
+    sleep 1  # Add a short delay to ensure smooth input handling
     cd /root/vanaNode/miner || { print_error "Failed to navigate to /root/vanaNode/miner directory."; exit 1; }
 
     # Step 2: Stop the Docker containers
