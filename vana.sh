@@ -296,7 +296,6 @@ restore_wallet() {
     sleep 1  # Add a short delay to ensure smooth input handling
 
     # Mnemonic ko clean karne ke liye xargs ka use kar rahe hain
-    C
     HOTKEY_MNEMONIC=$(echo "$HOTKEY_MNEMONIC" | xargs)
     
     # Attempt to regenerate the wallet using the provided mnemonic
