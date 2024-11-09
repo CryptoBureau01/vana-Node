@@ -167,6 +167,8 @@ setup_vana() {
 
 # Function to create a new Vana wallet
 create_wallet() {
+    #Entrr VanaCli Folder
+    cd /root/vanaNode/vana-dlp-chatgpt
     echo "Creating a new Vana wallet..."
 
     # Step 1: Creating new wallet phrase key
@@ -260,6 +262,10 @@ create_wallet() {
 
 # Function to restore a Vana wallet
 restore_wallet() {
+
+    #Entrr VanaCli Folder
+    cd /root/vanaNode/vana-dlp-chatgpt
+    sleep 1  # Add a short delay to ensure smooth input handling
     echo ""
     echo "Restoring coldkey and hotkey wallets using mnemonic phrases."
     echo ""
