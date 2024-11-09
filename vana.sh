@@ -253,20 +253,33 @@ restore_wallet() {
     # Step 1: Restore coldkey wallet
     echo ""
     read -p "Enter your Coldkey Mnemonic Phrase: " COLDKEY_MNEMONIC
-    ./vanacli wallet regen_coldkey --mnemonic "$COLDKEY_MNEMONIC" --wallet.path /root/.vana/wallets --wallet.name default
+    sleep 1  # Add a short delay to ensure smooth input handling
 
-    echo ""
-    echo "Coldkey wallet has been restored."
-    echo ""
+    # Attempt to regenerate the wallet using the provided mnemonic
+    ./vanacli wallet regen_coldkey --mnemonic "$COLDKEY_MNEMONIC" --wallet.path "/root/.vana/wallets" --wallet.name "default"
 
-    # Step 2: Restore hotkey wallet
+    # Print a message to check if the command succeeded
+    if [ $? -eq 0 ]; then
+        echo "ColdKey Wallet restored successfully."
+    else
+        echo "There was an error restoring the wallet. Please check your mnemonic phrase."
+    fi
+
+
+    # Step 1: Restore coldkey wallet
     echo ""
     read -p "Enter your Hotkey Mnemonic Phrase: " HOTKEY_MNEMONIC
-    vanacli wallet regen_hotkey --mnemonic "$HOTKEY_MNEMONIC" --wallet.path /root/.vana/wallets --wallet.name default
+    sleep 1  # Add a short delay to ensure smooth input handling
 
-    echo ""
-    echo "Hotkey wallet has been restored."
-    echo ""
+    # Attempt to regenerate the wallet using the provided mnemonic
+    ./vanacli wallet regen_hotkey --mnemonic "$HOTKEY_MNEMONIC" --wallet.path "/root/.vana/wallets" --wallet.name "default"
+
+    # Print a message to check if the command succeeded
+    if [ $? -eq 0 ]; then
+        echo "HotKey Wallet restored successfully."
+    else
+        echo "There was an error restoring the wallet. Please check your mnemonic phrase."
+    fi
 
     # Prompt user to input private keys manually
     echo ""
