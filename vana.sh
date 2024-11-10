@@ -59,10 +59,10 @@ install_dependency() {
 
     sleep 1  # Add a short delay to ensure smooth input handling
     # Download and execute the Python 3.11 installation script
-    if curl -s https://raw.githubusercontent.com/CryptoBureau01/packages/main/python3.10.sh | bash; then
+    if curl -s https://raw.githubusercontent.com/CryptoBureau01/packages/main/python3.11.sh | bash; then
         echo "Pyhton 3.11 installation script executed successfully."
-        sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.10 1
-        sudo update-alternatives --set python3 /usr/bin/python3.10
+        sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 1
+        sudo update-alternatives --set python3 /usr/bin/python3.11
     else
         echo "Error: Failed to run the Rust installation script. Please check the link or your network connection."
         exit 1
@@ -71,7 +71,7 @@ install_dependency() {
     sleep 1  # Add a short delay to ensure smooth input handling
     # Download and execute the Node.js v23.1.0 installation script
     if curl -s https://raw.githubusercontent.com/CryptoBureau01/packages/main/node.sh | bash; then
-        echo "Node.js v23.1.0 installation script executed successfully."
+        echo "Node.js v20.1.0 installation script executed successfully."
     else
         echo "Error: Failed to run the Rust installation script. Please check the link or your network connection."
         exit 1
@@ -141,10 +141,10 @@ setup_vana() {
     sleep 1  # Add a short delay to ensure smooth input handling
     cp .env.example .env
 
-    python3.10 -m pip install --upgrade pip
-    python3.10 -m pip install virtualenv
-    sudo apt install python3.10-dev
-    sudo apt install python3.10-distutils
+    python3.11 -m pip install --upgrade pip
+    python3.11 -m pip install virtualenv
+    sudo apt install python3.11-dev
+    sudo apt install python3.11-distutils
     sudo apt install build-essential
     
     # Install dependencies with Poetry
