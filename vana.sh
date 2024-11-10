@@ -620,6 +620,7 @@ EOL
 
 connect_node() {
 
+    cd /root/vanaNode/vana-dlp-chatgpt
     # Display the Moksha hotkey and coldkey wallet addresses
     print_info "Moksha Coldkey and Hotkey Wallet Addresses:"
     sleep 1  # Add a short delay to ensure smooth input handling
@@ -655,6 +656,19 @@ connect_node() {
         print_error "This Step 2 not completed: Approving the validator failed!"
         return 1
     fi
+
+    print_info "Testing Node ....."
+    poetry run python -m chatgpt.nodes.validator
+
+    print_info "Node Connect and Testing complete!"
+
+    # Call the uni_menu function to display the menu
+    master
+}
+
+
+
+service_setup() {
 
     # Step 3: Find Poetry Path
     print_info "Finding path of Poetry..."
@@ -702,7 +716,7 @@ EOL
         return 1
     fi
 
-    print_info "Node connection and setup complete!"
+    print_info "Node Service setup complete!"
 
     # Call the uni_menu function to display the menu
     master
@@ -988,22 +1002,23 @@ master() {
     print_info "7. Contract-Deploy"
     print_info "8. Node-Setup"
     print_info "9. Connect-Node"
-    print_info "10. Service-Status"
-    print_info "11. Check-Logs"
-    print_info "12. Stop-Node"
-    print_info "13. Start-Node"
-    print_info "14. Mining-Setup"
-    print_info "15. Mining-Start"
-    print_info "16. Mining-Stop"
-    print_info "17. Mining-Logs"
-    print_info "18. Full-Setup-Delete"
-    print_info "19. Exit"
+    print_info "10. Service-Setup"
+    print_info "11. Service-Status"
+    print_info "12. Check-Logs"
+    print_info "13. Stop-Node"
+    print_info "14. Start-Node"
+    print_info "15. Mining-Setup"
+    print_info "16. Mining-Start"
+    print_info "17. Mining-Stop"
+    print_info "18. Mining-Logs"
+    print_info "19. Full-Setup-Delete"
+    print_info "20. Exit"
     print_info "==============================="
     print_info " Created By : CB-Master "
     print_info "==============================="
     print_info ""
     
-    read -p "Enter your choice (1 or 19): " user_choice
+    read -p "Enter your choice (1 or 20): " user_choice
 
     case $user_choice in
         1)
@@ -1034,37 +1049,40 @@ master() {
             connect_node
             ;;
         10)
+            service_setup
+            ;;
+        11) 
             connect_status
             ;;
-        11)
+        12)
             check_logs
             ;;
-        12)
+        13)
             stop_node
             ;;
-        13)
+        14)
             start_node
             ;;
-        14)
+        15)
             mining_setup
             ;;
-        15)
+        16)
             mining_logs
             ;;
-        16)
+        17)
             mining_stop
             ;;
-        17) 
+        18) 
             mining_logs
             ;;
-        18)
+        19)
             delete_node
             ;;
-        19)
+        20)
             exit 0  # Exit the script after breaking the loop
             ;;
         *)
-            print_error "Invalid choice. Please enter 1 or 19 : "
+            print_error "Invalid choice. Please enter 1 or 20 : "
             ;;
     esac
 }
