@@ -413,6 +413,15 @@ contract_deploy() {
     # e.g., building contracts, setting environment variables, etc.
     print_info "Contract deployment folder is set up in $TARGET_DIR"
 
+    sleep 1
+    if [ -d "$TARGET_DIR" ]; then
+        cd "$TARGET_DIR" || { echo "Failed to navigate to vanaNode Contract directory."; return 1; }
+    else
+        echo "Error: Nexus Network Cli-Cargo directory not found."
+        return 1
+    fi
+
+    sleep 1
     # Input information from user
     print_info "Enter Moksha DLP Smart Contract Information:"
     read -p "Enter ColdKey Private Key: " DEPLOYER_PRIVATE_KEY
@@ -421,15 +430,20 @@ contract_deploy() {
     read -p "Enter DLP Token Name: " DLP_TOKEN_NAME
     read -p "Enter DLP Token Symbol: " DLP_TOKEN_SYMBOL
 
-    sleep 1  # Add a short delay to ensure smooth input handling
-    # Copy .env.example to .env and configure it
-    print_info "Configuring .env file for smart contracts..."
-    cp .env.example .env
-    sed -i "s|^DEPLOYER_PRIVATE_KEY=.*|DEPLOYER_PRIVATE_KEY=\"${DEPLOYER_PRIVATE_KEY}\"|" .env
-    sed -i "s|^OWNER_ADDRESS=.*|OWNER_ADDRESS=\"${OWNER_ADDRESS}\"|" .env
-    sed -i "s|^DLP_NAME=.*|DLP_NAME=\"${DLP_NAME}\"|" .env
-    sed -i "s|^DLP_TOKEN_NAME=.*|DLP_TOKEN_NAME=\"${DLP_TOKEN_NAME}\"|" .env
-    sed -i "s|^DLP_TOKEN_SYMBOL=.*|DLP_TOKEN_SYMBOL=\"${DLP_TOKEN_SYMBOL}\"|" .env
+    sleep 1
+    # Check if .env.example file exists
+    if [ -f .env.example ]; then
+        print_info "Configuring .env file for smart contracts..."
+        cp .env.example .env
+        sed -i "s|^DEPLOYER_PRIVATE_KEY=.*|DEPLOYER_PRIVATE_KEY=\"${DEPLOYER_PRIVATE_KEY}\"|" .env
+        sed -i "s|^OWNER_ADDRESS=.*|OWNER_ADDRESS=\"${OWNER_ADDRESS}\"|" .env
+        sed -i "s|^DLP_NAME=.*|DLP_NAME=\"${DLP_NAME}\"|" .env
+        sed -i "s|^DLP_TOKEN_NAME=.*|DLP_TOKEN_NAME=\"${DLP_TOKEN_NAME}\"|" .env
+        sed -i "s|^DLP_TOKEN_SYMBOL=.*|DLP_TOKEN_SYMBOL=\"${DLP_TOKEN_SYMBOL}\"|" .env
+    else
+        echo "Error: .env.example file does not exist. Please create it before running this script."
+        exit 1  # Exit the script with an error code
+     fi
 
     sleep 1  # Add a short delay to ensure smooth input handling
     # Install dependencies
@@ -553,7 +567,14 @@ node_setup() {
     sleep 1  # Add a short delay to ensure smooth input handling
     # Update .env file in vana-dlp-chatgpt
     print_info "Configuring .env file for vana-dlp-chatgpt..."
-    cd /root/vanaNode/vana-dlp-chatgpt
+    CHAT_GPT="/root/vanaNode/vana-dlp-chatgpt"
+
+    if [ -d "$CHAT_GPT" ]; then
+        cd "$CHAT_GPT" || { echo "Failed to navigate to vanaNode ChatGPT directory."; return 1; }
+    else
+        echo "Error: vanaNode ChatGPT directory not found."
+        return 1
+    fi
 
     sleep 1  # Add a short delay to ensure smooth input handling
     PUBLIC_KEY_BASE64=$(cat public_key_base64.asc)
@@ -635,11 +656,19 @@ connect_node() {
         print_info "Hotkey Address: $HOTKEY_ADDRESS"
 
     sleep 1  # Add a short delay to ensure smooth input handling
-    cd /root/vanaNode/vana-dlp-chatgpt
-    
+    CHAT_GPT1="/root/vanaNode/vana-dlp-chatgpt"
+
+    if [ -d "$CHAT_GPT1" ]; then
+        cd "$CHAT_GPT1" || { echo "Failed to navigate to vanaNode ChatGPT directory."; return 1; }
+    else
+        echo "Error: vanaNode ChatGPT directory not found."
+        return 1
+    fi
+
+    sleep 1  # Add a short delay to ensure smooth input handling
     # Step 1: Register as a validator
     print_info "Registering as a validator..."
-    sleep 1  # Add a short delay to ensure smooth input handling
+    
     if ./vanacli dlp register_validator --stake_amount 10; then
         print_info "Step 1 Completed!"
     else
@@ -658,6 +687,7 @@ connect_node() {
     fi
 
     print_info "Testing Node ....."
+    sleep 1  # Add a short delay to ensure smooth input handling
     poetry run python -m chatgpt.nodes.validator
 
     print_info "Node Connect and Testing complete!"
